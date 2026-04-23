@@ -1,63 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Startup de IA</title>
-</head>
-<body>
+<!doctype html>
+<html lang="es">
+    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi IA SaaS - Panel de Control</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-    <!-- la etiqueta h1 es un titulo -->
-  <!-- ctrl+k+c   para estos comentarios -->
-    <h1>
-        JOSE-IA
-    </h1>
+  <body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>IA Master</h2>
+            </div>
+            <nav class="menu-lateral">
+                <button>+ Nuevo Chat</button>
+                <div class="historial">
+                    <p>Historia reciente ...</p>
+                    <ul>
+                        <li>¿Cómo hacer dieta?</li>
+                        <li>Receta de pizza</li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="perfil">
+                <span>Usuario Pro</span>
+            </div>
+        </aside>
 
-    <!-- la etiqueta h2 son subtitulos -->
-    <h2> 
-        ¿Que puede hacer mi Asistente IA por ti?  
-    </h2>
+        <main class="chat-area">
+            
+            <header class="chat-header">
+                <h3>Conversación Actual</h3>
+            </header>
 
+            <section class="mensajes-container">
+                <div class="mensaje-ia">¡Hola! ¿En qué puedo ayudarte hoy?</div>
+            </section>
 
-<!-- la etiqueta <ul> crea lista con puntos -->
-
-
-<ul>
-    <!-- la etiqueta <li> son los elementos(viñetas) -->
-    <li>Generar rutinas de 15 minutos personalizadas.</li>
-    <li>Calcular tus caloriasd diariaas automaticamente</li>
-    <li>Avisarte de cuando beberd agua durante el dia</li>
-</ul>
-
-
-<!-- img+tab   <img src="" alt="">    para insertar imagen  -->
-<!-- ctrl+espacio    mete la imagen -->
-
-<img src="ia.jpg" alt="logotipo-imagen de IA" width="200">
-<img src="https://smilecomunicacion.com/wp-contenido/uploads/2024/09/conceptos-de-la-ia.jpg.webp" alt="logotipo-imagen de IA" width="450">
-<br> <a href="https://github.com/josemcnieto" target="_blank"> Visita mi perfil de github</a>
-
-
-<h2>Habla con la IA</h2>
-<form>
-    <label> Tu peticion</label>
-    <input type="text" placeholder="Ej: Eres un experto en programacion, generame un index.html responsive">
-    <button type="button">Enviar a la IA </button>
-</form>
-
-
-<form>
-    <label> Tu peticion</label>
-    <input type="text" placeholder="Responde a la peticion anterior de forma escrita>
-    <button type="button">Respuesta de  la IA </button>
-</form>
-
-
-
-</body>
+            <footer class="input-area">
+                <form class="chat-form">
+                    <input type="text" placeholder="Escribe tu pregunta aqui ...">
+                    <button type="submit">Enviar</button>
+                </form>
+            </footer>
+        </main>
+    </div>
+  </body>
 </html>
-<<<<<<< HEAD
-
-  
-=======
->>>>>>> f5852ad8d3f7d3811c90619216cee5e65870ab90
