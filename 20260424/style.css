@@ -1,0 +1,88 @@
+/* AGREGANDO STILOS A LAS TARJETAS */
+/*1. RESETEO BASICO*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-color: #f0f2f5;
+    padding: 50px;
+
+}
+
+/* REPASO FLEXBOX */
+.contenedor-tarjetas{
+   display: flex;
+   justify-content: center;/*Tarjetas centren en la pantalla*/ 
+   gap: 40px;/*Separacion perfecta entre tarjeta y tarjeta*/
+   margin-top: 40px ;
+}
+
+
+/* DISEÑO BASE DE LA TARJETA */
+.tarjeta{
+    background-color: white;
+    width: 320px;
+    padding: 40px 30px;
+    border-radius: 15px;
+    text-align: center;
+    /*Magia 1 :Sombra estatica suave*/
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    /*Magia 2: Prepararemos la animacion*/
+    /*Si cambia de posicion que sea suavemente*/
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+/* 4. EL EFECTO WOW */
+.tarjeta:hover{
+    /*Al pasar el raton la tarjeta flota 10px hacia arriba*/
+    transform: translateY(-10px);
+    /*La sombra se hace mas grande y oscura*/
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+
+
+}
+.tarjeta h3{
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.precio{
+    font-size: 36px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+.tarjeta {
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6; /*Interlineado 1,6 vecesd el tamaño de la letra*/
+}
+.tarjeta button{
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    background-color: #ecf0f1;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;  /*Transicion suave de color*/
+}
+
+.tarjeta .btn-destacado {
+    background-color: #3498db;
+    color: white;
+
+}
+.tarjeta button:hover{
+    background-color: #bdc3c7;
+
+}
+.tarjeta .btn-destacado:hover{
+     background-color: #2980b9;
+}
