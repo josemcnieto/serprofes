@@ -29,10 +29,10 @@
 .menu-lateral button{
     width: 100%;
     padding: 12px;
-    color: white;
     background: transparent;
-    border-bottom: 1px solid #4d4d4f;
-    border-radius:5px;
+    border: 1px solid #4d4d4f;
+    color: white;
+    border-radius: 5px;
     cursor: pointer;
     margin-bottom: 20px;
 }
@@ -79,6 +79,9 @@
     background-color: #40414f;
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0 0 15px #rgba(0,0,0,0.2);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
+.chat-form input{
+    
+}
