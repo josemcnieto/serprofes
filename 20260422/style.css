@@ -3,7 +3,7 @@
 *{
     margin: 0;
     padding: 0;
-    /* Hac que el tamaño de las cajas sea predecible */
+    /* Hace que el tamaño de las cajas sea predecible */
     box-sizing: border-box;
 }
 
