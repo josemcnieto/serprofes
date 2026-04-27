@@ -1,0 +1,22 @@
+/* SOLUCIAN: GALERIA  grid*/
+.gallery{
+    display: grid;
+    /*  3 columnas que ocupan lo mismo */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;  /*separacion*/ 
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.thumb{
+      /*obligamos que todas loas imagenes se midas igual*/
+     height: 250px; 
+     overflow: hidden;
+     border-radius: 8px;
+     transition: transform 0.3s ease;
+     cursor: pointer;
+     
+}
+.thumb :hover{
+    transform: scale(1.05); /*efecto zoom*/
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
