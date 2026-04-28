@@ -85,12 +85,25 @@ nav a:hover {
     width: 100%;
     height: 100%;
     /* magia 1 */
-    /*"cover"recortar la foto para encaje perfecto */
-    object-fit: cover;
-    /* contain hace que se vea al 100% la imager */
+    /*"cover" recortar la foto para encaje perfecto */
+    object-fit: contain;
+    /* "contain" hace que se vea al 100% la imagen */
     /*puedo optar por contain o por cover   */
     transition: transform 0.3s;
 }
 .thumb img :hover{
     transform: scale(1.05); /*efecto zoom ligero*/
+}
+
+/* 4. Ajuste de portada */
+.gallery .portada {
+    display: flex;  /* Quitamos el grid*/
+    justify-content: center;
+    align-items: center;
+}
+.gallery .portada img{
+    max-width: 800px;
+    height: auto;
+    border-radius: 10px;
+
 }
