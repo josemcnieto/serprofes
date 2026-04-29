@@ -68,7 +68,7 @@ nav a:hover {
 .gallery{
     grid-area: gallery;
     display: grid;
-    grid-template-columns: repeat(3,1fr);  /*3 columnas iguales*/
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));  /*3 columnas iguales*/
     gap: 20px;
     padding: 20px;
     /* Cajas de 300px exactos de alto */
@@ -91,7 +91,7 @@ nav a:hover {
     /*puedo optar por contain o por cover   */
     transition: transform 0.3s;
 }
-.thumb img :hover{
+.thumb img:hover{
     transform: scale(1.05); /*efecto zoom ligero*/
 }
 
@@ -106,4 +106,50 @@ nav a:hover {
     height: auto;
     border-radius: 10px;
 
+}
+
+/* 📱 TABLET */
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: 200px 1fr;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 📱 MÓVIL */
+@media (max-width: 600px) {
+    body {
+        /* Cambiamos layout a vertical */
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px auto 1fr 40px;
+        grid-template-areas:
+            "header"
+            "nav"
+            "gallery"
+            "footer";
+    }
+
+    /* Menú horizontal */
+    nav ul {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    nav li {
+        margin-bottom: 0;
+    }
+
+    nav a {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Galería en 1 columna */
+    .gallery {
+        grid-template-columns: 1fr;
+    }
 }
