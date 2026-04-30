@@ -1,0 +1,128 @@
+/* 1.RESETEO Y BASE */
+
+*{
+    margin: 0;
+    padding: 0;
+    /* El borde no aumentta el tamaño de la caja */
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* 2.EL CONTENEDOR PRINCIPAL (HERO) */
+.hero{
+    width: 100%;
+    min-height: 100vh; /*ocupa toda la pantalla*/
+    background-image: url(../images/back-image.png);
+    background-position: center;
+    background-size: cover;  /*La imagen cubre todo sin deformarse*/
+    padding: 10px  10%;    /*margen interior por los lados*/
+    overflow: hidden;  /*Oculta lo que salga de la pantalla*/
+    position: relative; /*parad poner la imagen del movil absolutad despues*/
+ }
+/* 3.  *BARRAD DE NAVEGACION*/
+nav{
+    padding: 10px 0;
+    display: flex; /*flexbox para poner elementos en fila*/ 
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    width: 140px;
+}
+nav ul li{
+    display: inline-block; /*pone la lista en horizontal*/
+    list-style: none;  /* quita los puntos de la lista*/
+    margin: 10px 15px;
+
+}
+nav ul li a{
+    text-decoration: none; /*quita el subrayado*/
+    color: #333;
+    font-weight: 400;
+
+}
+/* 4. botones premium*/
+
+.logn-btn {
+    text-decoration: none;
+    color: #333;
+    margin-right: 15px;
+    font-weight: 400;
+}
+.btn{
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 40px;
+    color: #fff;
+    /*fondo degradado diagonal*/
+    background-image: linear-gradient(45deg, #df4881, #c430d7);
+    font-size: 14px;
+    /*quita el redondeoa una esquina*/
+    border-radius: 30px;
+    border-top-right-radius: 0;
+    transition: 0.5s;
+    
+
+  
+        
+  }
+  .btn:hover{
+    /*al pasar el raton se redondea completo*/
+    border-top-right-radius: 30px;
+
+  }
+  /* 5. contenedor de textos */
+  .content{
+    margin-top: 10%;
+    max-width: 600px;
+
+  }
+  .content h1{
+    font-size: 70px;
+    color: #222;
+
+  }
+  .content p{
+    margin: 10px 0 30px;
+    color: #333;
+  }
+  .content .btn {
+    padding: 15px 80px;
+    font-size: 16px;
+  }
+  /*  */
+  .feature-img{
+  width: 530px;
+  position: absolute; /*imagend se ddesplaza a la derecha*/
+  bottom: 0;  /*chica end e l extemo inferior*/
+  right: 10px;
+
+  }
+  /* 6. magia: animaciones  */
+  /*  creamos la pelicula : de transparente  y abajo , a visible y arriba*/
+
+@keyframes moveup {
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+.anim {
+    opacity: 0;   /*empiezan  invisibles*/
+    /*empiezan 30px mas abajode de su sitio real*/
+    transform: translateY(30px);  
+    /* ejecutan moveup y se quedan en el estado final */
+    animation: moveup 0.5s linear forwards;
+    
+}
+/*aplicamos la pelicula a todos los que tengan clase anim */
+.content p{
+    animation-delay: 0.5s;
+}
+.content .btn{
+animation-delay: 1s;
+}
+.feature-img.anim {
+    animation-delay: 1.5s;
+}
