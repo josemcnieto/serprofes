@@ -96,7 +96,7 @@ nav ul li a{
   width: 530px;
   position: absolute; /*Saca del flujo*/
   bottom: 0;  /*Lo pega debajo de todo: chica en el extemo inferior*/
-  right: 10%;
+  right: 15%;
 
   }
   /* 6. magia: animaciones  */
@@ -125,4 +125,61 @@ animation-delay: 1s;
 }
 .feature-img.anim {
     animation-delay: 1.5s;
+}
+/* 7. responsive design */
+
+/* para moviles y tablets */
+@(max-width:850px){
+    /* 1. achicamos el texto principal */
+    .content h1{
+        font-size: 45px;
+        }
+/* 2. ocultamos la lista del menu */
+nav ul {
+    display: none;
+
+}
+.content {
+    margin-top: 15%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Arreglamos la imagen:sacamos el   */
+/* absolute para que baje abajo del texto */
+
+.feature-img{
+    width: 90%;
+    max-width: 350px;
+    /* cancelar el absolute */
+    position: relative;
+    display: block;
+    /* margin centra automaticamente */
+    margin: 40px auto 0;
+    right: o;
+}
+
+}
+/* ajuste para moviles mas pequeños */
+@media(max-width:500px){
+    /* achicamos el texto del titulo un poco mas */
+    .content hi {
+        font-size: 35px;
+    }
+    /* ocultamos el 'log in' para hacer un sitio */
+    nav: .logn-btn{
+        display: none;
+
+    }
+    /* reducimos el boton de arriba(download app) */
+    nav .btn{
+        padding: 10px 20px;  /*mucho mas delgado*/
+        font-size: 12px;   /*letra mas pequeña*/
+
+    }
+    /* reducimos el boton mas grande */
+    .content .btn{
+        padding: 12px 40px;/*pasa de 80px a 40px*/
+        font-size: 14px;
+    }
 }
