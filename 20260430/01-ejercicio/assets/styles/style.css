@@ -129,7 +129,7 @@ animation-delay: 1s;
 /* 7. responsive design */
 
 /* para moviles y tablets */
-@(max-width:850px){
+@media(max-width:850px){
     /* 1. achicamos el texto principal */
     .content h1{
         font-size: 45px;
@@ -156,7 +156,7 @@ nav ul {
     display: block;
     /* margin centra automaticamente */
     margin: 40px auto 0;
-    right: o;
+    right: 0;
 }
 
 }
@@ -167,7 +167,7 @@ nav ul {
         font-size: 35px;
     }
     /* ocultamos el 'log in' para hacer un sitio */
-    nav: .logn-btn{
+    nav .logn-btn{
         display: none;
 
     }
