@@ -4,31 +4,55 @@
     /* Hace que el tamaño de las cajas sea predecible */
     box-sizing: border-box;
 }
-.caja-imagen{
-    background: red;
+h1{
     text-align: center;
 }
+.caja-imagen{
+    
+    text-align: center;
+    
+    background: red;
+    margin: 10px;
+    padding: 0;
+    border-radius: 20px;
+    
+
+
 .texto-corto{
     background: white;
     margin: 10px;
     padding: 10px;
     text-align: center;
+    font-size: 50px;
+    font-weight:bold;
 }
 .texto-largo{
     background: white;
     margin: 10px;
     padding: 10px;
     text-align: center;
+    font-size: 30px;
+    font-weight:bold;
+    
 }
 .precio {
     background: white;
     margin: 10px;
     padding: 10px;
     text-align: center;
+    font-size: 60px;
+    color: red;
+    font-weight:bold;
+    
 }
-.carrito{
-    background: rgb(110, 110, 238);
+.Btn-add{
+    background: rgb(43, 226, 226);
     margin: 10px;
     padding: 10px;
     text-align: center;
+    height: 70px;
+    width: 60%;
+    font-size: 30px;
+    color: white;
+}
 }
