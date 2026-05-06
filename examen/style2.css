@@ -3,27 +3,40 @@
     padding: 0;
     /* Hace que el tamaño de las cajas sea predecible */
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 h1{
     text-align: center;
+    margin-top: 20px;
 }
 .caja-imagen{
     
     text-align: center;
     
-    background: red;
+    background: white;
     margin: 10px;
-    padding: 0;
+    padding: 20;
     border-radius: 20px;
-    
+}
 
+.caja-imagen img{
+    background-color:red;
+    padding: 20px;
+    margin: 20px;
+    
+}
+.caja-imagen img{
+    width: 50%;
+    height: auto;
+    
+}
 
 .texto-corto{
     background: white;
     margin: 10px;
     padding: 10px;
     text-align: center;
-    font-size: 50px;
+    font-size: 90px;
     font-weight:bold;
 }
 .texto-largo{
@@ -31,7 +44,7 @@ h1{
     margin: 10px;
     padding: 10px;
     text-align: center;
-    font-size: 30px;
+    font-size: 50px;
     font-weight:bold;
     
 }
@@ -43,7 +56,8 @@ h1{
     font-size: 60px;
     color: red;
     font-weight:bold;
-    
+
+         
 }
 .Btn-add{
     background: rgb(43, 226, 226);
@@ -51,8 +65,8 @@ h1{
     padding: 10px;
     text-align: center;
     height: 70px;
-    width: 60%;
+    width: 50%;
     font-size: 30px;
     color: white;
 }
-}
+
