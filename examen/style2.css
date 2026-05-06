@@ -13,17 +13,17 @@ h1{
     
     text-align: center;
     
-    background: white;
+    background: red;
     margin: 10px;
-    padding: 20;
+    padding: 50px;
     border-radius: 20px;
 }
 
 .caja-imagen img{
     background-color:red;
     padding: 50px;
-    margin: 20px;
-    display: inline-block;
+    margin: 0  auto;
+    display: block;
     text-align: center;
     
 }
@@ -67,12 +67,13 @@ h1{
 }
 .Btn-add{
     background: rgb(43, 226, 226);
-    margin: 10px;
+    margin: 10px  auto;
     padding: 10px;
     text-align: center;
     height: 70px;
     width: 50%;
     font-size: 30px;
     color: white;
+    display: block;
 }
 
