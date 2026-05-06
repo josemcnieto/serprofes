@@ -21,31 +21,37 @@ h1{
 
 .caja-imagen img{
     background-color:red;
-    padding: 20px;
+    padding: 50px;
     margin: 20px;
+    display: inline-block;
+    text-align: center;
     
 }
 .caja-imagen img{
     width: 50%;
     height: auto;
     
+    
 }
 
 .texto-corto{
     background: white;
-    margin: 10px;
+    margin: 10px  auto;
     padding: 10px;
     text-align: center;
-    font-size: 90px;
+    font-size: 60px;
     font-weight:bold;
+    width: 50%;
 }
 .texto-largo{
     background: white;
-    margin: 10px;
+    margin: 10px auto;
     padding: 10px;
     text-align: center;
-    font-size: 50px;
+    font-size: 40px;
     font-weight:bold;
+    width: 50%;
+    
     
 }
 .precio {
