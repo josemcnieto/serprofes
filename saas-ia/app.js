@@ -12,7 +12,7 @@ function enviarPrompt(event){
         alert("⚠️¡Error! Escribe algo primero");
     } else{
         alert("🤖 mensaje recibido:\n" + mensaje);
-        //3. limpiar input
+    //3. limpiar input
         document.getElementById('mensaje-input').value="";
     }
 
