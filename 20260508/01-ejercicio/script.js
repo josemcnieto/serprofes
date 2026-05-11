@@ -26,8 +26,9 @@ function comprobarNumero() {
         vidas --;
         //actualizar el texto de vidas en la pantalla
         textoVidas.textContent = "Vidas: " + vidas + "🧡";
-  }
-  // ** pistas **
+
+        
+      // ** pistas **
   if (intento < numeroSecreto) {
     etiqueta.textContent = 
     "¡Fallo! El numero es MAYOR ⬆"
@@ -44,5 +45,7 @@ function comprobarNumero() {
     etiqueta.style.color = "red";
     //desactivar el boton
     document.getElementById('btn-jugar').disable = true;
+  }   
   }
+ 
 }
