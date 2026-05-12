@@ -1,0 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef2f5;
+    display: flex;
+    gap: 20px;
+    padding: 40px;
+    justify-content: center;
+}
+
