@@ -15,3 +15,14 @@ function añadirAlCarrito(){
     document.getElementById('nuevo-item').value = "";
     
 }
+function eliminarDelCarrito(){
+    //atrapamos o que escribe el usuario
+    let item = document.getElementById('nuevo-item').value;
+    //magia de arrays: .push() mete el nuevo elemento al final de la lista
+    carrito.pop(item);
+    //volvemos a pintar la esta para que se vea
+    document.getElementById('pantalla-cesta').textContent = carrito.join(' - ');
+    //limpiamos el input
+    document.getElementById('nuevo-item').value = "";
+    
+}
