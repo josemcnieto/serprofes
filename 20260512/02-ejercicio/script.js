@@ -16,3 +16,23 @@ for(let i = 0; i < carrito.length;i++){
     <span>${carrito[i].precio.toFixed(2)}€</span>
     `
 }
+//la funcion cobrar
+function cobrar(){
+//1. creamos una variable = acumulador
+let sumaTotal = 0;
+//2.creamos un bucle for para recorrer el array
+for (let i = 0; i< carrito.length; i++){
+    //en cada vuelta le sumamos al "sumaTotal" el precio
+    sumaTotal = sumaTotal + carrito[i].precio;
+}
+sumaTotal *= 1.21;
+
+
+//3. mostramos el resultado final en html
+document.getElementById('resultado-total').textContent = 
+"Total: " + sumaTotal.toFixed(2) +" €";
+
+
+}
+
+
