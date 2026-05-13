@@ -1,0 +1,9 @@
+//1.nuestro super array(Array lleno de objetos)
+const carrito = [
+    {nombre: "🍞pan de molde", precio:1.20},
+    {nombre:"🥛 Leche entera", precio:0.90},
+    {nombre: "🥚 Huevos camperos", precio:2.50},
+    {nombre: "🥑 Aguacate", precio: 1.00},
+    {nombre: "🧀 Queso", precio: 1.50},
+    {nombre: "🌭 Salchicha", precio: 3.00}
+];
