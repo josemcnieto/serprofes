@@ -7,3 +7,12 @@ const carrito = [
     {nombre: "🧀 Queso", precio: 1.50},
     {nombre: "🌭 Salchicha", precio: 3.00}
 ];
+//codigo de apoyo visual
+let listaHTML = document.getElementById('lista-producto');
+for(let i = 0; i < carrito.length;i++){
+    //Usamos carrito[i].nombre para sacar el dato en cada vuelta
+    listaHTML.innerHTML += `
+    <li><span>${carrito[i].nombre}</span>
+    <span>${carrito[i].precio.toFixed(2)}€</span>
+    `
+}
