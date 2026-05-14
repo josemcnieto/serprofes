@@ -32,7 +32,6 @@ sumaTotal *= 1.21;
 document.getElementById('resultado-total').textContent = 
 "Total: " + sumaTotal.toFixed(2) +" €";
 
-
 }
 
 

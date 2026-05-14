@@ -37,6 +37,15 @@
     margin-bottom: 20px;
 }
 
+.historial ul {
+    margin: 10px;
+    padding-left: 20px;
+} 
+
+.historial li {
+    margin-bottom: 8px;
+}
+
 /* 4.AREA DE CHAT (Zona Central) */
 .chat-area{
     flex-grow: 1;   /*ocupa todo el espacio restante de la pantalla*/
@@ -50,22 +59,72 @@
     color:#ececf1;
     text-align: center;
 }
+.controles-filtro {
+    text-align: center;
+    padding: 10px;
+    background-color: #202123;
+    border-bottom:  1px  solid  #4d4d4f;
+
+}
+.controles-filtro button{
+    background: #444654;
+    color: white;
+    border: 1px  solid   #565869;
+    padding: 8px  15px;
+    margin: 0  5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+.controles-filtro button :hover{
+    background-color: #565869;
+  
+}
+
+/* modificamos el mensajes-container
+-mensajes uno debajo del otro
+-scroll vertical
+-simulacion real de chat
+ */
 
 .mensajes-container{
     flex-grow: 1; /*Mensajes ocupan el centro*/
-    padding: 40px;
+    padding: 20px  40px;
     display: flex;
-    justify-content: center; /*Centra horizontalmente*/
-    align-items: center; /*Centra el contenido verticalmente*/
+    /* se agrega el flex-direction : column por ser chat */
+    flex-direction: column;
+    /* flex-start: colocar elementos al inicio del contenedor */
+    justify-content: flex-start; 
+    /*strech los elementos ocupan el ancho disponible*/
+    align-items: stretch;
+    overflow-y: auto;
 }
 
-.mensaje-ia{
-    color: #d1d5db;
-    max-width: 600px;
-    font-size: 1.1rem;
-    line-height: 1.6;
-
+/* burbujas */
+.msg-usuario, .msg-ia{
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    max-width: 80%;
+    width: fit-content;
+    line-height: 1.5;
+    transition: all  0.3s  ease;
 }
+/* la burbuja de usuario se alinea a la derecha */
+.msg-usuario {
+    background-color: #19c37d;
+    color: white;
+    align-self: flex-end;
+}
+/* se alinea a la izquierda */
+.msg-ia{
+    background-color: 444654;
+    color: #d1d1d1;
+    align-self: flex-start;
+}
+
+
 /*5.FORMULARIO DE ENTRADA(input)*/
 .input-area{
     padding: 20px 40px;
@@ -89,6 +148,7 @@
     color: white;
     padding: 10px ;
     outline: none; /*Quita el borde azul al hacer click*/ 
+    font-size: 1rem;
 }
 .chat-form button{
     background-color: #19c37d;
@@ -97,8 +157,17 @@
     padding: 5px 15px;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.3s;
+}
+.chat-form button :hover{
+    opacity: 0.9;
 }
 
+/* sr-only oculta sin eliminarlo dd html */
+.sr-only {
+    position: absolute;
+    left:  -9999px;
+}
 /* MAGIA RESPONSIVE - ADAPTANDO EL CHAT A MOVILES */
 /* Si la pantalla es de tamaño tablet o movil (menos de 768px) */
 @media (max-width: 768px) {
@@ -118,8 +187,7 @@
 
     }
     .chat-form{
-        flex-direction: row;
-        padding: 5px;
+         padding: 5px;
     }
     .chat-form input {
         font-size: 0.9rem; /*letra mas pequeña*/
@@ -133,9 +201,11 @@
     .chat-header h3 {
         font-size: 1.1rem ;  /*achicamos el titulo superior*/
     }
-    .mensaje-ia {
+    
+    .msg-usuario, .msg-ia{
+        max-width: 90%;
         font-size: 0.95rem;
-        /* Ajustamos el texto de la ia para que no se vea gigante */
+        
     }
 }
 

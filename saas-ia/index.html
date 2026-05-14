@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <!-- Relacionamos con el fichero app.js para que cargue junto al html -->
     <script src="app.js" defer></script>
+
   </head>
 
   <body>
@@ -37,15 +38,32 @@
                 <h3>Conversación Actual</h3>
             </header>
 
-            <section class="mensajes-container">
-                <div class="mensaje-ia">¡Hola! ¿En qué puedo ayudarte hoy?</div>
-            </section>
+          <!--Agregar botones .... y el id="caja-mensajes" -->
+          <div class="controles-filtro">
+            <button onclick="mostrarTodo()"> Ver Todo</button>
+            <button onclick="verMisMensajes()">Mis Mensajes</button>
+            <button onclick="modoGritar()">Modo Mayusculas</button>
+         </div>
+
+            <section class="mensajes-container" id="caja-mensajes"></section>
 
             <footer class="input-area">
                 <!-- Evento Form señade la funcion enviarPrompt -->
                 <form class="chat-form" onsubmit="enviarPrompt(event)">
+
+                <!-- for ="mensaje-input" // sr-only = Solo para lectores de pantalla-->
+
+                 <label for="mensaje-input" class="sr-only">Mensaje</label>   
+                 
+                    
+
                     <!--Añadir ID  -->
-                    <input type="text" id="mensaje-input" placeholder="Escribe tu pregunta aqui ...">
+                    <input 
+                     type="text" 
+                     id="mensaje-input" 
+                     placeholder="Escribe tu pregunta aqui ..."
+                     autocomplete="off"
+                     >
                     <!-- Añadir tipo submit -->
                     <button type="submit">Enviar</button>
                 </form>
