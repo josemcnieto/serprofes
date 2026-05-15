@@ -20,7 +20,7 @@ function pintarChat(listaMensajes){
     //mantenemos el bucle for que aprendimos ayer
     //le decimos que de tantas vueltas como mensajes haya en la lista
     //(listaMensajes.legth)
-    for(let i = 0; 1 < listaMensajes.length;i++){
+    for(let i = 0; i < listaMensajes.length;i++){
         //paso 4: el condicional ternario(es un "if" resumido en una linea)
         //le preguntamos: ¿el rol de este mensaje es "usuario"?
         //si es true (usuario) - usamos la clase verde ("msg-usuario")
@@ -53,19 +53,67 @@ pintarChat(historialChat);
 function enviarPrompt(event){
     //evitamos que el form recargue la pagina
     event.preventDefault();
+    //atrapamos la cajita de texto donde el usuario escribe
+    let input = document.getElementById('mensaje-input');
 
     //1. capturar el texto
-
-    let mensaje = document.getElementById('mensaje-input').value.trim();
+    //sacamos el texto que ha esacrito el y le quitamos los espacio en blanoc
+    //con .trim()
+    let mensaje = input.value.trim();
 
     //2. condicional
 
     if (mensaje === ""){
         alert("⚠️¡Error! Escribe algo primero");
-    } else{
-        alert("🤖 mensaje recibido:\n" + mensaje);
-    //3. limpiar input
-        document.getElementById('mensaje-input').value="";
+        //el return expulsa a JS de la funcion para que no siga leyendo
+        return;
     }
+    //guardamos el mensaje real del usuario
+    let nuevoMensaje = {rol:"usuario", texto:mensaje};
+    historialChat.push(nuevoMensaje);  //lo metemos al final del Array
+   //b) el truco: simulamos que la IA nos responde al instante creando otro objeto
+   let respuestaIA = {rol: "ia", texto: "Estoy procesando tu mensaje: '" + mensaje + "'"};
+   historialChat.push(respuestaIA);
 
+   // c) como el array ha cambiado (tiene dos mensajes mas), obligamos a la web repintarse
+   pintarChat(historialChat);
+   //d ) limpiamos el texto que quedo escrito en el inmput
+   input.value = "";
+   input.focus();
 }
+
+//mini reto :  ver todo
+function mostrarTodo(){
+    pintarChat(historialChat);  
+}
+//mini reto 2-boton filtrar, el portero (Filter)
+function verMisMensajes() {
+    //revisa todo el historial . A cada mensaje lo llama "msj"
+    //devuelve una lista nueva SOLO ocn los dque cumplan la regla
+    // (rol === "usuario")
+    let soloUsuario = historialChat.filter(msj => msj.rol === "usuario");
+    //le pasamos esa lista cortita a nuestra funcion pintora
+    pintarChat(soloUsuario);
+ 
+}
+
+function modoGritar(){
+
+    //entra a todo el historial . Por cada mensaje ("msj") , construye un objeto nuevo
+    let chatGritando = historialChat.map(msj => {
+        return{
+            rol: msj.rol,
+            //aqui esta la transformacion: convertimos el texto original a mayusculas
+            texto: msj.texto.toUpperCase()
+        };
+    });
+    //le pasamos esa lista transformada a nuestra funcion pintora
+    pintarChat(chatGritando);
+}
+
+/////////////////
+function borrarChat(){
+
+     historialChat.length = 0;
+};
+
