@@ -112,8 +112,32 @@ function modoGritar(){
 }
 
 /////////////////
+// function borrarChat(){
+
+//      historialChat.length = 0;
+// };
+// 
+
+
+//reto 1. boton borrar
 function borrarChat(){
-
-     historialChat.length = 0;
-};
-
+    //1. Vaciamos la memoria (array vacio)
+    historialChat = [];
+    //2.pintamos en el html
+    pintarChat(historialChat);
+}
+//reto 2. buscador inteligente(filter+includes)
+function buscarMensaje(){
+    //1. atrapamos lo que el usuario ha escrito en la cajita del buscador
+    //usamos .toLowerCase() para pasarlo a minusculas y evitar problemas
+    //  de mayusculas/minuscular
+    let palabraBuscada = document.getElementById('input-buscador').value.toLowerCase();
+    //2. usamos el portero (filter)  para revisar el historial
+    let resultados = historialChat.filter(msj => {
+        //pasamos el texto original del mensaje a minusculas y le preguntaremos:
+        //"¿Este texto .include() (incluye) la palabra buscadas?"
+        return msj.texto.toLowerCase().includes(palabraBuscada);
+    });
+    //3.pintamos la pantalla solo los resultados encontrados
+    pintarChat(resultados);
+}
