@@ -27,3 +27,28 @@ btnToggle.addEventListener('click', () => {
         btnToggle.textContent = 'Ocultar Menu';
     }
 });
+//ejercicio 3 : modo oscuro
+const toggleOscuro = document.querySelector('#themeToggle');
+const textoSwitch = document.querySelector('.switch-text');
+const cuerpoWeb = document.body;
+//paso A : comprobar si el ususario ya tenia el modo oscuro
+//guardado al cargar la pagina
+const temaGuardado = localStorage.getItem('temaPreferido');
+if(temaGuardado === 'oscuro'){
+    cuerpoWeb.classList.add('dark');
+    toggleOscuro.checked = true;
+    textoSwitch.textContent = 'Desactivar Modo Oscuro';
+}
+//paso B: escuchar cuando el usuario marca o desmarca el checkbox
+toggleOscuro.addEventListener('change', () =>{
+    if (toggleOscuro.checked){
+     cuerpoWeb.classList.add('dark');
+     localStorage.setItem('temaPreferido' ,'oscuro');
+     textoSwitch.textContent = 'Desactivar Modo Oscuro';
+}else{
+    //si se desmarca, quitamos la clase y guardamos la preferencia clara
+    cuerpoWeb.classList.remove('dark');
+    localStorage.setItem('temaPreferido' , 'claro');
+    textoSwitch.textContent = 'Activar Modo Oscuro';
+}
+});
