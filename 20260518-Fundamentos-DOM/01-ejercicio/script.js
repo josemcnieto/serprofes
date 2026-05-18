@@ -52,3 +52,22 @@ toggleOscuro.addEventListener('change', () =>{
     textoSwitch.textContent = 'Activar Modo Oscuro';
 }
 });
+
+// 🔥 RETO BONUS: Botón de pago seguro
+const btnPago = document.querySelector('#payBtn');
+const estadoPago = document.querySelector('#estadoPago');
+
+btnPago.addEventListener('click', () => {
+
+    // Cambiar texto + icono
+    btnPago.innerHTML = '⏳ Procesando pago...';
+
+    // Deshabilitar botón
+    btnPago.disabled = true;
+
+    // Agregar clase visual
+    btnPago.classList.add('loading');
+
+    // Mostrar mensaje bonito
+    estadoPago.innerHTML = '✅ Pago procesándose correctamente';
+});

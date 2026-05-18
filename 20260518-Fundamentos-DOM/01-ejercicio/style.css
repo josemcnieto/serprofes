@@ -44,7 +44,7 @@ body {
     padding: 25px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    box-shadow: o 2px 5px  rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px  rgba(0,0,0,0.05);
 
 }
 /* botones */
@@ -57,7 +57,7 @@ body {
     transition: opacity 0.2s;
 
 }
-.btn :hover {
+.btn:hover {
     opacity: 0.8;
     
 }
@@ -98,4 +98,82 @@ body {
 /* utilidad clave para JS */
 .oculto{
     display: none;
+}
+button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+/* ===== TITULOS ===== */
+h2{
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+/* ===== DESCRIPCION ===== */
+.descripcion{
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+/* ===== CARD MEJORADA ===== */
+.card{
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===== BOTON PAGO ===== */
+.btn-pay{
+    background: linear-gradient(135deg, #00c853, #00e676);
+    color: white;
+    padding: 14px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,200,83,0.3);
+}
+
+.btn-pay:hover{
+    transform: scale(1.03);
+    box-shadow: 0 6px 15px rgba(0,200,83,0.5);
+}
+
+/* ===== ESTADO LOADING ===== */
+.loading{
+    background: linear-gradient(135deg, #ff9800, #ffb74d);
+    animation: pulse 1s infinite;
+}
+
+/* ===== MENSAJE DE PAGO ===== */
+.mensaje-pago{
+    margin-top: 15px;
+    font-weight: bold;
+    color: #00c853;
+    font-size: 1rem;
+}
+
+/* ===== ANIMACION ===== */
+@keyframes pulse{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.03);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+/* ===== BOTON DESHABILITADO ===== */
+button:disabled{
+    cursor: not-allowed;
+    opacity: 0.9;
 }
