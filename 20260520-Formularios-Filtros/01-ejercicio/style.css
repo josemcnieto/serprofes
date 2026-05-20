@@ -76,7 +76,7 @@ body {
 /* estilos a la tabla */
 .tabla-admin{
     width: 100%;
-    
+
     border-collapse: collapse;
     margin-top: 15px;
 
@@ -85,4 +85,15 @@ body {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid  #ddd;
+}
+
+.tabla-admin th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+.tabla-admin tr:hover{
+    background-color: #f1f1f1;
+}
+.oculto{
+    display: none;
 }
