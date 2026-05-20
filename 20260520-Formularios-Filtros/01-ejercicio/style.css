@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    padding: 20px;
+    margin: 0;
+}
+.dashboard {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.dashboard-header {
+    margin-bottom: 30px;
+
+}
+ .card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow:  0 4px 6px  rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+ }
+
+ .input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+ }
+ .input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    
+ }
+
+ .input-group input{
+    padding: 10px;
+    border: 1px  solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+ }
+
+.btn {
+    padding: 10px  20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-primary{
+    background-color: #000;
+    color: white;
+}
+
+.btn-primary:hover{
+    background-color: #333;
+}
+
+.alerta{
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: 5px;
+    border-left: 5px solid #28a745;
+}
+
+/* estilos a la tabla */
+.tabla-admin{
+    width: 100%;
+    
+    border-collapse: collapse;
+    margin-top: 15px;
+
+}
+.tabla-admin th, .tabla-admin td{
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid  #ddd;
+}
