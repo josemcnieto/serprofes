@@ -1,41 +1,168 @@
-//practica 1: formulario sin recarga
+// =========================================
+// PRACTICA 1:
+// AGREGAR USUARIO A LA TABLA
+// =========================================
 
+
+// Seleccionamos el formulario
 const form = document.querySelector('#suscipcioForm');
+
+
+// Seleccionamos los inputs
 const inputNombre = document.querySelector('#nombreInput');
+
+const inputEmail = document.querySelector('#emailInput');
+
+const inputRol = document.querySelector('#rolInput');
+
+
+// Seleccionamos la caja del mensaje
 const cajaMensaje = document.querySelector('#mensajeExito');
 
 
-//Escuchamos el evento 'submit'(cuando se envia el formulario)
+// Seleccionamos el tbody de la tabla
+const tablaBody = document.querySelector('#tablaUsuarios tbody');
+
+
+
+
+// =========================================
+// EVENTO SUBMIT
+// =========================================
+
 form.addEventListener('submit', (evento) => {
-    //1. la linea magica : evita que la pagina se recargue
+
+    // Evita que la página se recargue
     evento.preventDefault();
-    //2. capturamos lo que el usuario escribio (.trim() quita el espacio)
-    const textoEscrito = inputNombre.value.trim();
-    //3.mostramos el mensaje de exito
-    cajaMensaje.textContent = `✅ Usuario "${textoEscrito}" registrado correctamente en la base de datos.`;
+
+
+
+    // =========================================
+    // CAPTURAMOS LOS DATOS
+    // =========================================
+
+    const nombre = inputNombre.value.trim();
+
+    const email = inputEmail.value.trim();
+
+    const rol = inputRol.value;
+
+
+
+    // =========================================
+    // VALIDACIÓN SIMPLE
+    // =========================================
+
+    if(nombre === '' || email === '' || rol === ''){
+
+        alert('Por favor completa todos los campos');
+
+        return;
+    }
+
+
+
+    // =========================================
+    // CREAR NUEVA FILA
+    // =========================================
+
+    const nuevaFila = document.createElement('tr');
+
+
+
+    // =========================================
+    // INSERTAR DATOS EN LA FILA
+    // =========================================
+
+    nuevaFila.innerHTML = `
+        <td>${nombre}</td>
+        <td>${email}</td>
+        <td>${rol}</td>
+    `;
+
+
+
+    // =========================================
+    // AGREGAR FILA A LA TABLA
+    // =========================================
+
+    tablaBody.appendChild(nuevaFila);
+
+
+
+    // =========================================
+    // MOSTRAR MENSAJE DE ÉXITO
+    // =========================================
+
+    cajaMensaje.textContent =
+        `✅ Usuario "${nombre}" agregado correctamente.`;
+
+
+    // Mostrar mensaje
     cajaMensaje.classList.remove('oculto');
+
+
+
+    // =========================================
+    // LIMPIAR FORMULARIO
+    // =========================================
+
+    form.reset();
+
 });
 
-//practica 2: buscador en tabla en tiempo real
 
+
+
+
+// =========================================
+// PRACTICA 2:
+// BUSCADOR EN TIEMPO REAL
+// =========================================
+
+
+// Seleccionamos el buscador
 const buscador = document.querySelector('#buscadorUsuarios');
-//seleccionamos TODAS las filas que estan dentro del cuerpo de la tabla(tbody)
-const filas = document.querySelectorAll('#tablaUsuarios tbody tr');
 
-//el evento 'input' se dispara CADA VEZ que el usuario pulsa una tecla
+
+
+// Evento input:
+// Se ejecuta cada vez que escribimos
 buscador.addEventListener('input', () => {
-    //1. convertimos lo que escribe el usuario a minuscula para evitar problemas de mayusculas
-    const terminoBusqueda = buscador.value.toLowerCase();
-    //2. Usamos el bucle forEach para revisar fila a fila
+
+    // Convertimos el texto a minúsculas
+    const terminoBusqueda =
+        buscador.value.toLowerCase();
+
+
+
+    // Seleccionamos TODAS las filas
+    const filas =
+        document.querySelectorAll('#tablaUsuarios tbody tr');
+
+
+
+    // Recorremos cada fila
     filas.forEach(fila => {
-        //obtenemos todo el texto d esa fila en minusculas
-        const textoFila = fila.textContent.toLowerCase();
-        //3. condicional ¿el texto de la fila INCLUYE  lo que buscamos?
+
+        // Obtenemos el texto de la fila
+        const textoFila =
+            fila.textContent.toLowerCase();
+
+
+
+        // ¿La fila incluye el texto buscado?
         if(textoFila.includes(terminoBusqueda)){
+
+            // Mostrar fila
             fila.style.display = '';
+
         }else{
-            //si no lo incluye lo ocultamos
+
+            // Ocultar fila
             fila.style.display = 'none';
         }
+
     });
+
 });

@@ -1,48 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agencia - Formularios y Filtros</title>
-    <link rel="stylesheet" href="link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">">
+
+    <title>Panel de Administración</title>
+
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-    <SCRipt src="script.js"  defer> </SCRipt>
 </head>
+
 <body>
+
     <main class="dashboard">
+
+        <!-- HEADER -->
         <header class="dashboard-header">
-            <h1>Panel de Administracion</h1>
-            <p>Gestion de usuarios y suscripciones</p>
+            <h1>Panel de Administración</h1>
+            <p>Gestión de usuarios y suscripciones</p>
         </header>
-        <!-- Practica 1: Formulario sin recarga -->
-         <section class="card">
+
+
+        <!-- FORMULARIO -->
+        <section class="card">
+
             <h2>1. Añadir Suscriptor</h2>
+
             <form id="suscipcioForm" class="formularios">
+
+                <!-- Nombre -->
                 <div class="input-group">
-                    <label for="nombreInput">Nombre completo</label>
-                    <input type="text" id="nombreInput" placeholder="Ej. Ada Lovelance" required>
+
+                    <label for="nombreInput">
+                        Nombre completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombreInput"
+                        placeholder="Ej. Ada Lovelace"
+                        required
+                    >
+
                 </div>
-                <button type="submit" class="btn btn-primary">Suscribir Usuario</button>
+
+
+                <!-- Email -->
+                <div class="input-group">
+
+                    <label for="emailInput">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="emailInput"
+                        placeholder="Ej. ada@email.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Rol -->
+                <div class="input-group">
+
+                    <label for="rolInput">
+                        Rol
+                    </label>
+
+                    <select id="rolInput" required>
+
+                        <option value="">
+                            Selecciona un rol
+                        </option>
+
+                        <option value="Admin">
+                            Admin
+                        </option>
+
+                        <option value="Editor">
+                            Editor
+                        </option>
+
+                        <option value="Usuario">
+                            Usuario
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Botón -->
+                <button type="submit" class="btn btn-primary">
+                    Suscribir Usuario
+                </button>
 
             </form>
-            <!-- Aqui inyectaremos el mensaje de exito con JS -->
-             <div id="mensajeExito" class="alerta oculto"></div>
-         </section>
-            <!-- Practica 2: Buscador en tabla a tiempo real -->
-         <section class="card">
-            <h2>2. Base de Datos de Usuario</h2>
+
+
+            <!-- Mensaje de éxito -->
+            <div id="mensajeExito" class="alerta oculto"></div>
+
+        </section>
+
+
+
+        <!-- TABLA -->
+        <section class="card">
+
+            <h2>2. Base de Datos de Usuarios</h2>
+
+            <!-- Buscador -->
             <div class="input-group">
-                <input type="text" id="buscadorUsuarios" placeholder="🔍 Buscar por el nombre, email o rol ....">
+
+                <input
+                    type="text"
+                    id="buscadorUsuarios"
+                    placeholder="🔍 Buscar por nombre, email o rol..."
+                >
+
             </div>
+
+
+            <!-- Tabla -->
             <table id="tablaUsuarios" class="tabla-admin">
+
                 <thead>
+
                     <tr>
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Rol</th>
                     </tr>
+
                 </thead>
+
+
                 <tbody>
+
                     <tr>
                         <td>Jorge Daniel</td>
                         <td>jorge@agencia.com</td>
@@ -61,14 +161,22 @@
                         <td>Editor</td>
                     </tr>
 
-                     <tr>
+                    <tr>
                         <td>Lewis Sanchez</td>
                         <td>lewis@agencia.com</td>
                         <td>Usuario</td>
                     </tr>
+
                 </tbody>
+
             </table>
-         </section>
+
+        </section>
+
     </main>
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
 </body>
 </html>
