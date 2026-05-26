@@ -1,4 +1,4 @@
-import { baseURL.js } from "./config.js";
+import { baseURL} from "./config.js";
 
 /**callAPI : nuestro cartero virtual(Cliente generico) 
 * @param{String} ruta - La ruta final (ej. "/post/1")
@@ -31,5 +31,5 @@ export async function callAPI(ruta, opciones = {}){
         console.error("Fallo critico en el cartero: ", error)
         throw error; // Lanzamos el error hacia arriba para que la pantalla lo muestre
     }
-    )
+    
 }

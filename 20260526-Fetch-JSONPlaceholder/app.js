@@ -19,7 +19,7 @@ btnBuscar.addEventListener('click', async ()=> {
 
     try {
         //Llamamos a nuestro cartero con la ruta dinamica
-        const post = await callAPIv(`/posts/${id}`);
+        const post = await callAPI(`/posts/${id}`);
         //pintamos el objeto pantalla de forma bonita
         //JSON.stringify(objeto, null,2);
     }catch(error){
