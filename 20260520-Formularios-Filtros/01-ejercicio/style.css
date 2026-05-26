@@ -161,3 +161,13 @@ body{
 .tabla-admin tr:hover{
     background: #f9fafb;
 }
+
+.admin {
+   color:red;
+}
+.editor {
+   color:blue;
+}
+.usuario {
+   color:green;
+}
