@@ -22,6 +22,7 @@ btnBuscar.addEventListener('click', async ()=> {
         const post = await callAPI(`/posts/${id}`);
         //pintamos el objeto pantalla de forma bonita
         //JSON.stringify(objeto, null,2);
+        pantalla.textContent = JSON.stringify(post, null,2);
     }catch(error){
         pantalla.textContent = "❌ No se encontro la publicacion o hubo un error."
     }
