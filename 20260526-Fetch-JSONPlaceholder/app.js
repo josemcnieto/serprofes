@@ -25,4 +25,4 @@ btnBuscar.addEventListener('click', async ()=> {
     }catch(error){
         pantalla.textContent = "❌ No se encontro la publicacion o hubo un error."
     }
-})
+});

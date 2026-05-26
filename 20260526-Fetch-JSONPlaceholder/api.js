@@ -1,4 +1,4 @@
-import { baseURL } from "./config";
+import { baseURL.js } from "./config.js";
 
 /**callAPI : nuestro cartero virtual(Cliente generico) 
 * @param{String} ruta - La ruta final (ej. "/post/1")
