@@ -42,38 +42,80 @@ cargarMemoria();
 
 //2.La funcion pintura(visual)
 //Esta funcion recibe una lista (nuestro array) y lo dibuja en la pantalla
-function pintarChat(listaMensajes){
-    //paso 1 = buscamos en el html la etiquet donde vamos a meter los mensajes
-    let caja = document.getElementById('caja-mensajes');
-    //paso 2 = borramos la pizarra.
-    //si no hacemos esto, cada vez que enviemos un mensaje nuevo,
-    //se volvera a pintar todo el historial antiguo
-    caja.innerHTML = "";
-    //paso 3 = el trabajador virtual (el bucle for)
-    //mantenemos el bucle for que aprendimos ayer
-    //le decimos que de tantas vueltas como mensajes haya en la lista
-    //(listaMensajes.legth)
-    for(let i = 0; i < listaMensajes.length;i++){
-        //paso 4: el condicional ternario(es un "if" resumido en una linea)
-        //le preguntamos: ¿el rol de este mensaje es "usuario"?
-        //si es true (usuario) - usamos la clase verde ("msg-usuario")
-        //si es false(:) - usamos la clase gris("msg-ia")
-        let claseCSS = listaMensajes[i].rol === "usuario" ? "msg-usuario" : "msg-ia";
-        //paso 5: inyectar el html (usando comillas invertidas ``)
-        //las ocmillas invertidas nos permiten meter variables de JS dentro del html
-        //usando el simbolo de dolar y las llaves ${....}
-        //caja.innerHTML += significa "añade este bloque al final de lo que haya"
-        caja.innerHTML += 
-                            `<div class = "${claseCSS}">
-                             <b>${listaMensajes[i].rol.toUpperCase()}:</b><br>
-                             ${listaMensajes[i].texto}</div>
-                            `;
-    }
+// function pintarChat(listaMensajes){
+//     //paso 1 = buscamos en el html la etiquet donde vamos a meter los mensajes
+//     let caja = document.getElementById('caja-mensajes');
+//     //paso 2 = borramos la pizarra.
+//     //si no hacemos esto, cada vez que enviemos un mensaje nuevo,
+//     //se volvera a pintar todo el historial antiguo
+//     caja.innerHTML = "";
+//     //paso 3 = el trabajador virtual (el bucle for)
+//     //mantenemos el bucle for que aprendimos ayer
+//     //le decimos que de tantas vueltas como mensajes haya en la lista
+//     //(listaMensajes.legth)
+//     for(let i = 0; i < listaMensajes.length;i++){
+//         //paso 4: el condicional ternario(es un "if" resumido en una linea)
+//         //le preguntamos: ¿el rol de este mensaje es "usuario"?
+//         //si es true (usuario) - usamos la clase verde ("msg-usuario")
+//         //si es false(:) - usamos la clase gris("msg-ia")
+//         let claseCSS = listaMensajes[i].rol === "usuario" ? "msg-usuario" : "msg-ia";
+//         //paso 5: inyectar el html (usando comillas invertidas ``)
+//         //las ocmillas invertidas nos permiten meter variables de JS dentro del html
+//         //usando el simbolo de dolar y las llaves ${....}
+//         //caja.innerHTML += significa "añade este bloque al final de lo que haya"
+//         caja.innerHTML += 
+//                             `<div class = "${claseCSS}">
+//                              <b>${listaMensajes[i].rol.toUpperCase()}:</b><br>
+//                              ${listaMensajes[i].texto}</div>
+//                             `;
+//     }
     //paso 6: el auto-scroll (el truco de whatsapp)
     //le decimos a la caja que baje su barra de desplazamiento hasta el fondo
     //para que siempre veamos el ultimo mensaje enviado
     caja.scrollTop = caja.scrollHeight;
-}  
+  
+
+// 2. LA FUNCIÓN PINTORA (Ahora 100% Segura contra Hackers)
+function pintarChat(listaMensajes){
+    let caja = document.getElementById('caja-mensajes');
+    //ESTO SI ES SEGURO : Vaciar la caja usando innerHTML == "" no supone riesgo
+    // porque no le estamos inyectando texto del usuario, solo la estamos limpiando
+    caja.innerHTML = "";
+    
+    //Recorremos la lista de mensajes
+    for(let i = 0; i < listaMensajes.length; i++){
+        
+        //1. Creamos la caja principal del mensaje (el <div>) de forma segura
+        let divMensaje = document.createElement('div');
+        divMensaje.className = listaMensajes[i].rol === "usuario" ? "msg-usuario" : "msg-ia";
+        
+        //2. Creamos la etiqueta de negreta para el nombre
+        let textoRol = document.createElement('b');
+        textoRol.textContent = listaMensajes[i].rol.toUpperCase() + ":";
+
+        //3. Creamos el salto de línea
+        let saltoLinea = document.createElement('br');
+
+        //4. EL ESCUDO DEFENSIVO: Creamos un <span> para el texto real.
+        let textoContenido = document.createElement('span');
+        // Al usar .textContent, JS transforma cualquier codigo malicioso
+        // como un <script> in texto inofensivo. Lo "desactiva".
+        textoContenido.textContent = " " + listaMensajes[i].texto;
+
+        //5. Ensamblamos las piezas: Metemos el rol, el salto y el texto dentro del div
+        divMensaje.appendChild(textoRol);
+        divMensaje.appendChild(saltoLinea);
+        divMensaje.appendChild(textoContenido);
+
+        //6. Inyectamos el div ya terminado y seguro en la pantalla principal
+        caja.appendChild(divMensaje);
+    }
+    // El auto-scroll
+    caja.scrollTop = caja.scrollHeight;
+}
+
+
+
 
 // pintarChat(historialChat);      
 // function enviarPrompt(event){
@@ -136,29 +178,66 @@ function enviarPrompt(event){
     input.value = "";
     input.focus();
 
-    //d) el efecto "IA pensando...."
-    let caja = document.getElementById('caja-mensajes');
-    caja.innerHTML += `
-        <div class="msg-ia" id="mensaje-pensando">
-            <b>IA MASTER:</b><br>✍️ Pensando...
-        </div> 
-         `;
-         caja.scrollTop = caja.scrollHeight; //bajamos el scroll para ver el pensando
+    // //d) el efecto "IA pensando...."
+    // let caja = document.getElementById('caja-mensajes');
+    // caja.innerHTML += `
+    //     <div class="msg-ia" id="mensaje-pensando">
+    //         <b>IA MASTER:</b><br>✍️ Pensando...
+    //     </div> 
+    //      `;
+    //      caja.scrollTop = caja.scrollHeight; //bajamos el scroll para ver el pensando
 
-         //e)retrasamos la respuesta real de la IAS 1.5 segundos(1500ms)
-         setTimeout(() => {
-            //1. eliminamos de la pantallad el indicador "Pensando...."
-            document.getElementById('mensaje-pensando').remove();
-            //2.metemos la respuesta definitiva en el array
-           historialChat.push({rol: "ia", texto: "Estoy procesando tu mensaje: '" + mensaje +"'"});
-            //3.volvemosd a pintar el chat completo y actualizamos la memoria del disco duro del navegador
-            pintarChat(historialChat);
-            localStorage.setItem('chatGuardado',JSON.stringify(historialChat));
+    //      //e)retrasamos la respuesta real de la IAS 1.5 segundos(1500ms)
+    //      setTimeout(() => {
+    //         //1. eliminamos de la pantallad el indicador "Pensando...."
+    //         document.getElementById('mensaje-pensando').remove();
+    //         //2.metemos la respuesta definitiva en el array
+    //        historialChat.push({rol: "ia", texto: "Estoy procesando tu mensaje: '" + mensaje +"'"});
+
+//         //3.volvemosd a pintar el chat completo y actualizamos la memoria del disco duro del navegador
+//             pintarChat(historialChat);
+//             localStorage.setItem('chatGuardado',JSON.stringify(historialChat));
+//         }, 1500);
+// }
+
+
+
+// d) efecto "IA pensando"
+let caja = document.getElementById('caja-mensajes');
+//como esto lo escribimos nosotros ,(no el usuario) , usar innerHTML no es peligroso
+caja.innerHTML += `
+<div class = "msg-ia" id= "mensaje-pensando">
+<b>IA MASTER:</b><br> ⌛ Buscando en internet
+`;
+caja.scrollTop = caja.scrollHeight; // bajamos el scrol para el pensando....
+
+
+
+//e)la IA se conecta a internet (fetch api)
+//le ponemos 'async' al seTimeOut para poder usar el 'await' dentro
+
+  setTimeout(async () =>{
+        //1. Eliminamos de la pantalla el indicador de Pesando ...
+        document.getElementById('mensaje-pensando').remove();
+        try {
+            //2. Hacemos la petición a la API de gatos (Nuestro cerebro temporal)
+            const respuestaExterna = await fetch("https://catfact.ninja/fact");
+            //si la API falla, lanzamos un error que nos enviará al catch
+            if(!respuestaExterna.ok) throw new Error ("Fallo en el servidor de la IA");
+            //3. Traducir el JSON
+            const datosApi = await respuestaExterna.json();
+            //4. Metemos la respuesta real (dato del gato) en el historial
+            historialChat.push({rol: "ia", texto: "Datos curiso: " + datosApi.fact});
+        } catch (error){
+            //Plan B: Si no hay internet o la API cae
+            historialChat.push({rol:"ia", texto: "Ups, mis servidores están caídos" + error.message});
+        }
+        //5. Volvemos a pitnar el chat completo
+        pintarChat(historialChat);
+        localStorage.setItem('chatGuardado', JSON.stringify(historialChat));
         }, 1500);
 }
-
-
-
+    
 
 
 
