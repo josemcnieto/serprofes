@@ -1,0 +1,32 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: linear-gradient(
+        -45deg,
+        #ffcb05,
+        #3b4cca,
+        #ff0000,
+        #00d4ff
+    );
+
+    background-size: 400% 400%;
+
+    animation: fondoAnimado 10s ease infinite;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.container{
+    width: 90%;
+    max-width: 350px;
+
+    margin: 30px 0;
+}
