@@ -80,6 +80,39 @@ app.post("/api/estudiantes", (req,res) =>{
 
 
 
+//rutas dinamicas (CRUD COMPLETO)
+app.get("/api/estudiantes/:id", (req, res) =>{
+    const idBuscado = parseInt(req.params.id);
+    const estudiante = estudiantes.find(e=> e.id === idBuscado);
+
+    if (estudiante){
+        res.json(estudiante);
+    }else{
+        res.status(404).json({error : "Estudiante no encontrado"});
+    }   
+});
+
+//✍️ actualizar estudiante
+app.put("/api/estudiantes/:id", (req, res) => {
+    const idActualizar = parseInt(req.params.id);
+    const indice = estudiantes.findIndex(e => e.id === idActualizar);
+
+    if (indice !== -1){
+        // Actualizamos los datos, pero mantenemos el ID original intacto
+        estudiantes[indice] = { id: idActualizar, ...req.body};
+        res.json({
+            mensaje: "¡Estudiante actualizado",
+            estudianteModificado: estudiantes[indice]
+        });
+    } else {
+        res.status(404).json({ error: "Estudiante no encontrado"});
+    }
+});
+
+
+
+
+
 // reto 1. base de datos profesores
 let profesores = [
     {id: 1, nombre: "Jorge", asignatura: "Desarrollo Web"},
