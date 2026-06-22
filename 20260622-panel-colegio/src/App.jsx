@@ -1,122 +1,132 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // 1. ESTADOS: Variables de React que actualizan la pantalla automáticamente
+  const [estudiantes, setEstudiantes] = useState([]);
+  const [nombre, setNombre] = useState("");
+  const [curso, setCurso] = useState("");
 
+  // URL exacta de nuestra API de estudiantes
+  const API_URL = "http://localhost:3000/api/estudiantes";
+
+  // ==========================================
+  // OPERACIÓN GET: LEER ESTUDIANTES
+  // ==========================================
+  const obtenerEstudiantes = async () => {
+    try {
+      const respuesta = await fetch(API_URL);
+      const datos = await respuesta.json();
+      setEstudiantes(datos); // Guardamos los datos en React
+    } catch (error) {
+      console.error("Error al conectar con el servidor:", error);
+    }
+  };
+
+  // Esto hace que la lista se pida al servidor nada más abrir la página
+  useEffect(() => {
+    obtenerEstudiantes();
+  }, []);
+
+  // ==========================================
+  // OPERACIÓN POST: GUARDAR ESTUDIANTE
+  // ==========================================
+  const manejarEnvio = async (e) => {
+    e.preventDefault(); // Evita que la página se recargue
+    
+    // Creamos el paquete de datos que enviaremos al backend
+    const nuevoEstudiante = { nombre, curso };
+
+    try {
+      const respuesta = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nuevoEstudiante), // Transformamos a texto JSON
+      });
+
+      if (respuesta.ok) {
+        setNombre(""); // Limpiamos la caja de nombre
+        setCurso(""); // Limpiamos la caja de curso
+        obtenerEstudiantes(); // Volvemos a pedir la lista actualizada
+      }
+    } catch (error) {
+      console.error("Error al guardar:", error);
+    }
+  };
+
+  // ==========================================
+  // OPERACIÓN DELETE: BORRAR ESTUDIANTE
+  // ==========================================
+  const manejarBorrado = async (id) => {
+    try {
+      const respuesta = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+      });
+      if (respuesta.ok) {
+        obtenerEstudiantes(); // Refrescamos la lista tras borrar
+      }
+    } catch (error) {
+      console.error("Error al borrar:", error);
+    }
+  };
+
+  // ==========================================
+  // LO QUE SE VE EN PANTALLA (INTERFAZ CORREGIDA)
+  // ==========================================
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+    <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
+      <h1>Panel de Gestión de Estudiantes</h1>
+
+      {/* FORMULARIO */}
+      <form onSubmit={manejarEnvio} style={{ marginBottom: "20px" }}>
+        <h3>Añadir Estudiante</h3>
+        <input
+          type="text"
+          placeholder="Nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          required
+          style={{ marginRight: "10px", padding: "8px" }}
+        />
+        <input
+          type="text"
+          placeholder="Curso"
+          value={curso}
+          onChange={(e) => setCurso(e.target.value)}
+          required
+          style={{ marginRight: "10px", padding: "8px" }}
+        />
+        <button type="submit" style={{ padding: "8px 15px", cursor: "pointer" }}>
+          Guardar
         </button>
-      </section>
+      </form>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* LISTA DE ESTUDIANTES */}
+      <h3>Lista de Clase</h3>
+      <ul style={{ listStyleType: "none", padding: 0 }}>
+        {estudiantes.map((estudiante) => (
+          <li key={estudiante.id} style={{ marginBottom: "10px" }}>
+            <span>
+              ID {estudiante.id}: {estudiante.nombre} - {estudiante.curso}
+            </span>{" "}
+            <button
+              onClick={() => manejarBorrado(estudiante.id)}
+              style={{
+                backgroundColor: "#e74c3c",
+                color: "white",
+                border: "none",
+                padding: "5px 10px",
+                cursor: "pointer",
+                borderRadius: "3px",
+                marginLeft: "10px"
+              }}
+            >
+              Borrar
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
