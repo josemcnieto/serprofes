@@ -1,8 +1,13 @@
 //1, imprtamos la heramiente principal (Express)
 const express = require("express");
 
+const cors = require("cors"); // 1. IMPORTAMOS CORS
+
 //2, cramos nuesta aplicaicon(nuestro sevidor)
 const app = express();
+
+
+
 
 //3, MIDDLEWARE (la linea magica)
 //esto es un traductor . le dice a node : "si alguien 
@@ -11,6 +16,9 @@ const app = express();
 //, el post falla."
 app.use(express.json());
 
+//3.el middleware (la linea magica)
+app.use(cors()); // 2. DAMOS PERMISO A REACT
+app.use(express.json());
 
 //nuestra base de datos
 //guardamos informacion temporalmente en una lista array
@@ -74,3 +82,7 @@ app.post("/api/estudiantes", (req,res) =>{
 app.listen(3000, ()=>{
     console.log("¡Servidor funcionando! URL: http://localhost:3000");
 });
+
+
+// resumen
+app.get ("/", )
