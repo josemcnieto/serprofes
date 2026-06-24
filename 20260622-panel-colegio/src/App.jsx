@@ -31,13 +31,14 @@ function App() {
 
   const manejarEnvioEstudiante = async (e) => {
     e.preventDefault();
-    const datos = { nombre, curso };
     try {
       if (idEditandoEstudiante) {
+        // Al modificar, incluimos el ID exacto que se está editando
+        const datosModificados = { id: idEditandoEstudiante, nombre, curso };
         const r = await fetch(`${API_ESTUDIANTES}/${idEditandoEstudiante}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(datos),
+          body: JSON.stringify(datosModificados),
         });
         if (r.ok) {
           setIdEditandoEstudiante(null);
@@ -46,10 +47,11 @@ function App() {
           obtenerEstudiantes();
         }
       } else {
+        const datosNuevos = { nombre, curso };
         const r = await fetch(API_ESTUDIANTES, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(datos),
+          body: JSON.stringify(datosNuevos),
         });
         if (r.ok) {
           setNombre("");
@@ -98,13 +100,14 @@ function App() {
 
   const manejarEnvioProfesor = async (e) => {
     e.preventDefault();
-    const datos = { nombre: nombreProfesor, asignatura };
     try {
       if (idEditandoProfesor) {
+        // Al modificar, incluimos el ID exacto del profesor
+        const datosModificados = { id: idEditandoProfesor, nombre: nombreProfesor, asignatura };
         const r = await fetch(`${API_PROFESORES}/${idEditandoProfesor}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(datos),
+          body: JSON.stringify(datosModificados),
         });
         if (r.ok) {
           setIdEditandoProfesor(null);
@@ -113,10 +116,11 @@ function App() {
           obtenerProfesores();
         }
       } else {
+        const datosNuevos = { nombre: nombreProfesor, asignatura };
         const r = await fetch(API_PROFESORES, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(datos),
+          body: JSON.stringify(datosNuevos),
         });
         if (r.ok) {
           setNombreProfesor("");
@@ -268,38 +272,4 @@ function App() {
               </div>
             </form>
           </div>
-
-          <div>
-            <h3 className="text-sm font-bold text-slate-700 mb-3">
-              Cuerpo Docente ({profesores.length})
-            </h3>
-            {profesores.length === 0 ? (
-              <p className="text-slate-400 text-xs text-center py-6 border border-dashed rounded-xl">No hay profesores.</p>
-            ) : (
-              <ul className="divide-y divide-slate-100 border rounded-xl bg-white max-h-96 overflow-y-auto">
-                {profesores.map((prof) => (
-                  <li key={prof.id} className="flex justify-between items-center p-3 hover:bg-slate-50">
-                    <div className="text-xs">
-                      <span className="font-semibold text-slate-900 block">{prof.nombre}</span>
-                      <span className="text-violet-600 font-medium">{prof.asignatura}</span>
-                    </div>
-                    <div className="flex gap-1.5">
-                      <button onClick={() => seleccionarProfesorParaEditar(prof)} className="bg-blue-50 text-blue-600 text-[11px] font-bold px-2.5 py-1 rounded-md">
-                        Modificar
-                      </button>
-                      <button onClick={() => manejarBorradoProfesor(prof.id)} className="bg-rose-50 text-rose-600 text-[11px] font-bold px-2.5 py-1 rounded-md">
-                        Borrar
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default App;
+          
