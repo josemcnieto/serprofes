@@ -1,160 +1,302 @@
 import { useState, useEffect } from "react";
 
 function App() {
-  // 1. ESTADOS: Variables de React que actualizan la pantalla automáticamente
   const [estudiantes, setEstudiantes] = useState([]);
   const [nombre, setNombre] = useState("");
   const [curso, setCurso] = useState("");
+  const [idEditandoEstudiante, setIdEditandoEstudiante] = useState(null);
 
-  // URL exacta de nuestra API de estudiantes
-  const API_URL = "http://localhost:3000/api/estudiantes";
+  const [profesores, setProfesores] = useState([]);
+  const [nombreProfesor, setNombreProfesor] = useState("");
+  const [asignatura, setAsignatura] = useState("");
+  const [idEditandoProfesor, setIdEditandoProfesor] = useState(null);
 
-  // ==========================================
-  // OPERACIÓN GET: LEER ESTUDIANTES
-  // ==========================================
-  const obtenerEstudiantes = async () => {
-    try {
-      const respuesta = await fetch(API_URL);
-      const datos = await respuesta.json();
-      setEstudiantes(datos); // Guardamos los datos en React
-    } catch (error) {
-      console.error("Error al conectar con el servidor:", error);
-    }
-  };
+  const API_ESTUDIANTES = "http://localhost:3000/api/estudiantes";
+  const API_PROFESORES = "http://localhost:3000/api/profesores";
 
-  // Esto hace que la lista se pida al servidor nada más abrir la página
   useEffect(() => {
     obtenerEstudiantes();
+    obtenerProfesores();
   }, []);
 
-  // ==========================================
-  // OPERACIÓN POST: GUARDAR ESTUDIANTE
-  // ==========================================
-  const manejarEnvio = async (e) => {
-    e.preventDefault(); // Evita que la página se recargue
-    
-    // Creamos el paquete de datos que enviaremos al backend
-    const nuevoEstudiante = { nombre, curso };
-
+  const obtenerEstudiantes = async () => {
     try {
-      const respuesta = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(nuevoEstudiante), // Transformamos a texto JSON
-      });
-
-      if (respuesta.ok) {
-        setNombre(""); // Limpiamos la caja de nombre
-        setCurso(""); // Limpiamos la caja de curso
-        obtenerEstudiantes(); // Volvemos a pedir la lista actualizada
-      }
-    } catch (error) {
-      console.error("Error al guardar:", error);
+      const r = await fetch(API_ESTUDIANTES);
+      const d = await r.json();
+      setEstudiantes(d);
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  // ==========================================
-  // OPERACIÓN DELETE: BORRAR ESTUDIANTE
-  // ==========================================
-  const manejarBorrado = async (id) => {
+  const manejarEnvioEstudiante = async (e) => {
+    e.preventDefault();
+    const datos = { nombre, curso };
     try {
-      const respuesta = await fetch(`${API_URL}/${id}`, {
-        method: "DELETE"
-      });
-      if (respuesta.ok) {
-        obtenerEstudiantes(); // Refrescamos la lista tras borrar
+      if (idEditandoEstudiante) {
+        const r = await fetch(`${API_ESTUDIANTES}/${idEditandoEstudiante}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
+        if (r.ok) {
+          setIdEditandoEstudiante(null);
+          setNombre("");
+          setCurso("");
+          obtenerEstudiantes();
+        }
+      } else {
+        const r = await fetch(API_ESTUDIANTES, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
+        if (r.ok) {
+          setNombre("");
+          setCurso("");
+          obtenerEstudiantes();
+        }
       }
-    } catch (error) {
-      console.error("Error al borrar:", error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  // ==========================================
-  // LO QUE SE VE EN PANTALLA (ESTILIZADO CON TAILWIND CSS)
-  // ==========================================
+  const seleccionarEstudianteParaEditar = (est) => {
+    setIdEditandoEstudiante(est.id);
+    setNombre(est.nombre);
+    setCurso(est.curso);
+  };
+
+  const cancelarEdicionEstudiante = () => {
+    setIdEditandoEstudiante(null);
+    setNombre("");
+    setCurso("");
+  };
+
+  const manejarBorradoEstudiante = async (id) => {
+    try {
+      const r = await fetch(`${API_ESTUDIANTES}/${id}`, { method: "DELETE" });
+      if (r.ok) {
+        if (idEditandoEstudiante === id) cancelarEdicionEstudiante();
+        obtenerEstudiantes();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const obtenerProfesores = async () => {
+    try {
+      const r = await fetch(API_PROFESORES);
+      const d = await r.json();
+      setProfesores(d);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const manejarEnvioProfesor = async (e) => {
+    e.preventDefault();
+    const datos = { nombre: nombreProfesor, asignatura };
+    try {
+      if (idEditandoProfesor) {
+        const r = await fetch(`${API_PROFESORES}/${idEditandoProfesor}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
+        if (r.ok) {
+          setIdEditandoProfesor(null);
+          setNombreProfesor("");
+          setAsignatura("");
+          obtenerProfesores();
+        }
+      } else {
+        const r = await fetch(API_PROFESORES, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
+        if (r.ok) {
+          setNombreProfesor("");
+          setAsignatura("");
+          obtenerProfesores();
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const seleccionarProfesorParaEditar = (prof) => {
+    setIdEditandoProfesor(prof.id);
+    setNombreProfesor(prof.nombre);
+    setAsignatura(prof.asignatura);
+  };
+
+  const cancelarEdicionProfesor = () => {
+    setIdEditandoProfesor(null);
+    setNombreProfesor("");
+    setAsignatura("");
+  };
+
+  const manejarBorradoProfesor = async (id) => {
+    try {
+      const r = await fetch(`${API_PROFESORES}/${id}`, { method: "DELETE" });
+      if (r.ok) {
+        if (idEditandoProfesor === id) cancelarEdicionProfesor();
+        obtenerProfesores();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center justify-start p-4 sm:p-8">
-      <div className="max-w-2xl w-full bg-white rounded-2xl shadow-md border border-slate-100 p-6 sm:p-8">
-        
-        {/* TÍTULO PRINCIPAL */}
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight text-center mb-8">
-          Panel de Gestión de Estudiantes
-        </h1>
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center p-4 sm:p-8">
+      <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-10 text-center">
+        Centro Educativo - Panel de Control
+      </h1>
 
-        {/* SECCIÓN DEL FORMULARIO */}
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-8">
-          <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <span className="w-2 h-4 bg-indigo-600 rounded-full inline-block"></span>
-            Añadir Estudiante
-          </h3>
-          
-          <form onSubmit={manejarEnvio} className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="text"
-              placeholder="Nombre del alumno"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              required
-              className="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all shadow-sm placeholder:text-slate-400"
-            />
-            <input
-              type="text"
-              placeholder="Curso (ej. 2º Bachillerato)"
-              value={curso}
-              onChange={(e) => setCurso(e.target.value)}
-              required
-              className="flex-1 px-4 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-all shadow-sm placeholder:text-slate-400"
-            />
-            <button 
-              type="submit" 
-              className="bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium text-sm px-6 py-2.5 rounded-lg shadow-sm transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Guardar
-            </button>
-          </form>
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl w-full">
+        {/* COLUMNA 1: ESTUDIANTES */}
+        <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6">
+          <h2 className="text-xl font-black text-indigo-900 mb-6 border-b pb-2">
+            Sección Alumnos
+          </h2>
 
-        {/* SECCIÓN DE LA LISTA */}
-        <div>
-          <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <span className="w-2 h-4 bg-emerald-500 rounded-full inline-block"></span>
-            Lista de Clase
-          </h3>
-          
-          {estudiantes.length === 0 ? (
-            <p className="text-slate-500 text-sm text-center py-6 bg-slate-25 rounded-xl border border-dashed border-slate-200">
-              No hay estudiantes registrados actualmente.
-            </p>
-          ) : (
-            <ul className="divide-y divide-slate-100 border border-slate-100 rounded-xl overflow-hidden bg-white shadow-sm">
-              {estudiantes.map((estudiante) => (
-                <li 
-                  key={estudiante.id} 
-                  className="flex justify-between items-center px-5 py-3.5 hover:bg-slate-50 transition-colors group"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                    <span className="inline-flex items-center justify-center bg-slate-200 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded-md min-w-[2.5rem]">
-                      ID {estudiante.id}
-                    </span>
-                    <div className="text-sm">
-                      <span className="font-semibold text-slate-900">{estudiante.nombre}</span>
-                      <span className="text-slate-400 mx-2 hidden sm:inline">•</span>
-                      <span className="text-slate-500 block sm:inline">{estudiante.curso}</span>
-                    </div>
-                  </div>
-                  
-                  <button
-                    onClick={() => manejarBorrado(estudiante.id)}
-                    className="bg-rose-50 hover:bg-rose-100 active:bg-rose-200 text-rose-600 hover:text-rose-700 text-xs font-semibold px-3 py-2 rounded-lg border border-rose-100 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-                  >
-                    Borrar
+          <div className={`${idEditandoEstudiante ? 'bg-amber-50/50 border-amber-200' : 'bg-slate-50 border-slate-200'} border rounded-xl p-4 mb-6`}>
+            <h3 className="text-sm font-bold text-slate-700 mb-3">
+              {idEditandoEstudiante ? "Modificar Alumno" : "Matricular Alumno"}
+            </h3>
+            <form onSubmit={manejarEnvioEstudiante} className="flex flex-col gap-2">
+              <input
+                type="text"
+                placeholder="Nombre del alumno"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                required
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm"
+              />
+              <input
+                type="text"
+                placeholder="Curso (ej. 2º Bachillerato)"
+                value={curso}
+                onChange={(e) => setCurso(e.target.value)}
+                required
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm"
+              />
+              <div className="flex gap-2">
+                <button type="submit" className={`flex-1 ${idEditandoEstudiante ? 'bg-amber-600' : 'bg-indigo-600'} text-white font-medium text-sm py-2 rounded-lg`}>
+                  {idEditandoEstudiante ? "Actualizar" : "Guardar"}
+                </button>
+                {idEditandoEstudiante && (
+                  <button type="button" onClick={cancelarEdicionEstudiante} className="bg-slate-200 text-slate-700 font-medium text-sm px-4 py-2 rounded-lg">
+                    Cancelar
                   </button>
-                </li>
-              ))}
-            </ul>
-          )}
+                )}
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-bold text-slate-700 mb-3">
+              Lista de Estudiantes ({estudiantes.length})
+            </h3>
+            {estudiantes.length === 0 ? (
+              <p className="text-slate-400 text-xs text-center py-6 border border-dashed rounded-xl">No hay estudiantes.</p>
+            ) : (
+              <ul className="divide-y divide-slate-100 border rounded-xl bg-white max-h-96 overflow-y-auto">
+                {estudiantes.map((est) => (
+                  <li key={est.id} className="flex justify-between items-center p-3 hover:bg-slate-50">
+                    <div className="text-xs">
+                      <span className="font-semibold text-slate-900 block">{est.nombre}</span>
+                      <span className="text-slate-500">{est.curso}</span>
+                    </div>
+                    <div className="flex gap-1.5">
+                      <button onClick={() => seleccionarEstudianteParaEditar(est)} className="bg-blue-50 text-blue-600 text-[11px] font-bold px-2.5 py-1 rounded-md">
+                        Modificar
+                      </button>
+                      <button onClick={() => manejarBorradoEstudiante(est.id)} className="bg-rose-50 text-rose-600 text-[11px] font-bold px-2.5 py-1 rounded-md">
+                        Borrar
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
 
+        {/* COLUMNA 2: PROFESORES */}
+        <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6">
+          <h2 className="text-xl font-black text-violet-900 mb-6 border-b pb-2">
+            Sección Profesores
+          </h2>
+
+          <div className={`${idEditandoProfesor ? 'bg-amber-50/50 border-amber-200' : 'bg-slate-50 border-slate-200'} border rounded-xl p-4 mb-6`}>
+            <h3 className="text-sm font-bold text-slate-700 mb-3">
+              {idEditandoProfesor ? "Modificar Profesor" : "Registrar Profesor"}
+            </h3>
+            <form onSubmit={manejarEnvioProfesor} className="flex flex-col gap-2">
+              <input
+                type="text"
+                placeholder="Nombre del profesor"
+                value={nombreProfesor}
+                onChange={(e) => setNombreProfesor(e.target.value)}
+                required
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm"
+              />
+              <input
+                type="text"
+                placeholder="Asignatura"
+                value={asignatura}
+                onChange={(e) => setAsignatura(e.target.value)}
+                required
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm"
+              />
+              <div className="flex gap-2">
+                <button type="submit" className={`flex-1 ${idEditandoProfesor ? 'bg-amber-600' : 'bg-violet-600'} text-white font-medium text-sm py-2 rounded-lg`}>
+                  {idEditandoProfesor ? "Actualizar" : "Guardar"}
+                </button>
+                {idEditandoProfesor && (
+                  <button type="button" onClick={cancelarEdicionProfesor} className="bg-slate-200 text-slate-700 font-medium text-sm px-4 py-2 rounded-lg">
+                    Cancelar
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-bold text-slate-700 mb-3">
+              Cuerpo Docente ({profesores.length})
+            </h3>
+            {profesores.length === 0 ? (
+              <p className="text-slate-400 text-xs text-center py-6 border border-dashed rounded-xl">No hay profesores.</p>
+            ) : (
+              <ul className="divide-y divide-slate-100 border rounded-xl bg-white max-h-96 overflow-y-auto">
+                {profesores.map((prof) => (
+                  <li key={prof.id} className="flex justify-between items-center p-3 hover:bg-slate-50">
+                    <div className="text-xs">
+                      <span className="font-semibold text-slate-900 block">{prof.nombre}</span>
+                      <span className="text-violet-600 font-medium">{prof.asignatura}</span>
+                    </div>
+                    <div className="flex gap-1.5">
+                      <button onClick={() => seleccionarProfesorParaEditar(prof)} className="bg-blue-50 text-blue-600 text-[11px] font-bold px-2.5 py-1 rounded-md">
+                        Modificar
+                      </button>
+                      <button onClick={() => manejarBorradoProfesor(prof.id)} className="bg-rose-50 text-rose-600 text-[11px] font-bold px-2.5 py-1 rounded-md">
+                        Borrar
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
