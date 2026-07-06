@@ -13,7 +13,7 @@ const inventario = [
 // 3. la ruta (el camarero)
 // cuando alguien pida 'api/productos', le entregamos el inventario
 
-app.get('/api/productos', (req, res) =>{
+app.get('/api/articulos-libros', (req, res) =>{
     //res.json convierte los datos para que el internet entiend
     res.json(inventario);
     });
