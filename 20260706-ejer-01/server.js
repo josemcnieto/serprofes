@@ -6,7 +6,7 @@ const app = express();
 // esto es un array de objetos (json)
 const inventario = [
         {id:1, articulo: "Libros-Ficcion" , stock:200},
-        {id:2, articulo: "Libros-Biogracias", stock:40},
+        {id:2, articulo: "Libros-Biografias", stock:40},
         {id:3, articulo: "Libros-Aventuras", stock:150},
         {id:3, articulo: "Libros-Aventuras", stock:150}
 ];
