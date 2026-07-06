@@ -8,7 +8,7 @@ const inventario = [
         {id:1, articulo: "Libros-Ficcion" , stock:200},
         {id:2, articulo: "Libros-Biografias", stock:40},
         {id:3, articulo: "Libros-Aventuras", stock:150},
-        {id:3, articulo: "Libros-Aventuras", stock:150}
+        {id:3, articulo: "Libros-Arquitectura", stock:150}
 ];
 // 3. la ruta (el camarero)
 // cuando alguien pida 'api/productos', le entregamos el inventario
