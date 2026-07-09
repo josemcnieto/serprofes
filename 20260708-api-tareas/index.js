@@ -11,9 +11,68 @@ const PORT = 3000;
 //4. Iniciamos el servidor
 //listen() hace que el servidor quede esperando peticiones
 //de los clientes (por ejemplo, desde un navegador)
+
+
+
+//=================
+//middleware
+//===================
+//un middleware es una funcion que se ejecuta antes de
+//lleat a las rutas
+//express.json() convierte autmaticamente los datos
+//enviados en formato JSON en un objeto Javascript
+//gracias a esste middleware podremos acceder a :
+//req.body
+//cuando el cliente envie informacion mediante POST o PUT
+app.use(express.json());
+
+//===============
+//Base de datos en memoria 
+//============
+//simulamos una base de datos utilizando un arreglo
+//importante:
+//los datos solo existen mientras el servidor esta 
+//encendido
+//si detenemos Node.js, toda esta informacion se pierde
+let tareas = [
+    //primera tarea
+    {
+        id: 1,
+        titulo: "Aprender Express",
+        completada:false
+    },
+    //segunda tares
+    {
+        id:2,
+        titulo: "Estudiar Node.js",
+        completada: true
+    },
+    //tercera tarea
+    {
+        id:3,
+        titulo:"Practicar Thunder Client",
+        completada:false
+    }
+
+];
+//==================
+//ruta principal
+//================
+app.get("/", (req,res)=> {
+    res.send("🚀 Bienvenido a la API REST de Tareas");
+})
+
+
+
+
+
+
+
 app.listen(PORT, () => {
     //5. Cuando el servidor se incicia correctamente,
     //mostramos un mensaje en la consola.
+
+
     console.log(`🎉Servidor ejecutándose en http://localhost:${PORT}`);
 });
 
