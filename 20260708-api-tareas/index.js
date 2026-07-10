@@ -18,7 +18,7 @@ const PORT = 3000;
 //middleware
 //===================
 //un middleware es una funcion que se ejecuta antes de
-//lleat a las rutas
+//llegar a las rutas
 //express.json() convierte autmaticamente los datos
 //enviados en formato JSON en un objeto Javascript
 //gracias a esste middleware podremos acceder a :
@@ -62,15 +62,28 @@ app.get("/", (req,res)=> {
     res.send("🚀 Bienvenido a la API REST de Tareas");
 })
 
-
-
-
-
+//=================
+//ruta principal 
+//=====================
 
 
 app.listen(PORT, () => {
     //5. Cuando el servidor se incicia correctamente,
     //mostramos un mensaje en la consola.
+
+//=================
+//get-obtener todas las tareas
+//=====================
+//ruta:
+//get /api/taras
+//devuelve todas la tareas almecenadas
+app.get("/api/tareas", (req,res) =>{
+    //codigo HTTP 200 =OK
+    //json () convierte automanticamente el arreglo
+    //en  formato json
+    res.status (200).json(tareas);
+
+});
 
 
     console.log(`🎉Servidor ejecutándose en http://localhost:${PORT}`);
