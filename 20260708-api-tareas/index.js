@@ -12,80 +12,106 @@ const PORT = 3000;
 //listen() hace que el servidor quede esperando peticiones
 //de los clientes (por ejemplo, desde un navegador)
 
-
-
-//=================
-//middleware
-//===================
-//un middleware es una funcion que se ejecuta antes de
-//llegar a las rutas
-//express.json() convierte autmaticamente los datos
-//enviados en formato JSON en un objeto Javascript
-//gracias a esste middleware podremos acceder a :
-//req.body
-//cuando el cliente envie informacion mediante POST o PUT
+//================================================
+//MIDDLEWARE
+//================================================
+// Un middleware es una función que se ejecuta antes de
+//llegar a las rutas.
+// express.json()convierte automáticamente los datos
+//enviados en formato JSON en un objeto JavaScript.
+//Gracias a este middleware podremos acceder a :
+// req.body
+//cuando el cliente envíe información mediate POST o PUT.
 app.use(express.json());
 
-//===============
-//Base de datos en memoria 
-//============
-//simulamos una base de datos utilizando un arreglo
-//importante:
-//los datos solo existen mientras el servidor esta 
+//=========================================
+//BASE DE DATOS EN MEMORIA
+//=========================================
+// Simulamos una base de datos utilizando un arreglo
+//IMPORTANTE:
+//Los datos solo existen mientras el servidor está
 //encendido
-//si detenemos Node.js, toda esta informacion se pierde
+//Si detenemos Node.js, toda esta información se pierde
 let tareas = [
-    //primera tarea
+    // Primera tarea
     {
         id: 1,
         titulo: "Aprender Express",
-        completada:false
+        completada: false
     },
-    //segunda tares
+    // Segunda tarea
     {
         id:2,
         titulo: "Estudiar Node.js",
         completada: true
     },
-    //tercera tarea
+    // Tercera tarea
     {
         id:3,
-        titulo:"Practicar Thunder Client",
+        titulo: "Practicar Thunder Client",
         completada:false
     }
 
 ];
-//==================
-//ruta principal
-//================
-app.get("/", (req,res)=> {
+
+//================================
+//RUTA PRINCIPAL
+//================================
+app.get("/", (req, res)=> {
     res.send("🚀 Bienvenido a la API REST de Tareas");
 })
 
-//=================
-//ruta principal 
-//=====================
+
+//=====================================
+// GET - OBTENER TODAS LAS TAREAS
+//=====================================
+// Ruta:
+// GET /api/tareas
+//Devuelve todas las tareas almacenadas.
+app.get("/api/tareas", (req, res) => {
+    //Código HTTP 200 = OK
+    //json() convierte autimáticamente el arreglo
+    // en formato JSON.
+    res.status(200).json(tareas);
+});
+
+//====================================
+//GET - OBTENER UNA TAREA POR SU ID
+//====================================
+//Ruta:
+//GET /api/tareas/2
+//":id" significa que el valor es dinámico
+app.get("/api/tareas/:id", (req, res) => {
+    //req.params.id llega como texto.
+    //parseInt() lo convierte a número
+    const id = parseInt(req.params.id);
+    // Buscamos la tarea cuyo id coincida.
+    const tarea = tareas.find(t => t.id === id);
+    // Si no existe
+    if(!tarea) {
+        // Código HTTP 404 = No encontrado
+        return res.status(404).json ({
+            mensaje: "La tarea no existe"
+        });
+    }
+    // Si existe devolvemos la tarea.
+    res.status(200).json(tarea);
+});
+
+
+
+
+
+
+
+
 
 
 app.listen(PORT, () => {
     //5. Cuando el servidor se incicia correctamente,
     //mostramos un mensaje en la consola.
-
-//=================
-//get-obtener todas las tareas
-//=====================
-//ruta:
-//get /api/taras
-//devuelve todas la tareas almecenadas
-app.get("/api/tareas", (req,res) =>{
-    //codigo HTTP 200 =OK
-    //json () convierte automanticamente el arreglo
-    //en  formato json
-    res.status (200).json(tareas);
-
-});
-
-
     console.log(`🎉Servidor ejecutándose en http://localhost:${PORT}`);
 });
+
+
 
