@@ -12,11 +12,6 @@ const PORT = 3000;
 //listen() hace que el servidor quede esperando peticiones
 //de los clientes (por ejemplo, desde un navegador)
 
-<<<<<<< HEAD
-
-//middleware
-//
-=======
 //================================================
 //MIDDLEWARE
 //================================================
@@ -89,7 +84,7 @@ app.get("/api/tareas", (req, res) => {
 app.get("/api/tareas/:id", (req, res) => {
     //req.params.id llega como texto.
     //parseInt() lo convierte a número
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id); 
     // Buscamos la tarea cuyo id coincida.
     const tarea = tareas.find(t => t.id === id);
     // Si no existe
@@ -103,47 +98,40 @@ app.get("/api/tareas/:id", (req, res) => {
     res.status(200).json(tarea);
 });
 
-//====================
-//post- crear una nueva tarea
-//======================
-//ruta:
-//post/api/tareas
-//el cliente enviara un json como:
+//=============================================
+//POST - CREAR UNA NUEVA TAREA
+//=============================================
+//Ruta:
+//POST /api/tareas
+//Cliente enviará un JSON como:
 //{ "titulo": "Estudiar Express " }
-
-app.post("/api/tareas",(req,res) =>{
-    //estraemos el titulo enviado por el client
-    const{titulo}= req.body;
-    //validamos que el titulo exista
-
-
-    if(!titulo){
-        //codigo HTTP = Solicitud incorrecta
+app.post("/api/tareas", (req, res) =>{
+    // Extraemos el título enviado por el cliente
+    const { titulo } = req.body;
+    // Validamos que el título exista
+    if(!titulo) {
+        //Código HTTP = Solicitud incorrecta 
         return res.status(400).json({
-            mensaje : "Debe indicar el titulo de la tarea"
-
+            mensaje: "Debe indicar el título de la tarea"
         });
-      }
-      //creamos un nuevo objeto
-      const nuevaTarea = {
-        //generamos un id automatico
-        id: tareas.length +1,
-        //guardamos el titulo recibido.
-        titulo, 
-        //toda tarea nueva comienza incompleta
+    }
+    //Creamos un nuevo objeto
+    const nuevaTarea = {
+        //Generamos un id automático
+        id: tareas.length + 1,
+        //Guardamos el título recibido.
+        titulo,
+        // Toda tarea nueva comienza incompleta
         completada: false
-      };
-      //agregamos la nueva tarea al arreglo
-      tareas.push(nuevaTarea);
-      res.status(201).json({
-        mensaje : "Tarea creada correctamente",
+    };
+    // Agregamos la nueva tarea al arreglo
+    tareas.push(nuevaTarea);
+    // Respondemos indicando que fue creada
+    res.status(201).json({
+        mensaje: "Tarea creada correctamente",
         tarea: nuevaTarea
-    });
-
+    }); 
 });
-
-
-
 
 //=============================================
 // PUT - ACTUALIZAR UNA TAREA
@@ -184,7 +172,21 @@ app.put("/api/tareas/:id", (req, res) => {
 });
 
 
->>>>>>> b16587e45a01dfea4359bf3edecfc4c80c8e3254
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
