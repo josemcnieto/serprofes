@@ -172,8 +172,35 @@ app.put("/api/tareas/:id", (req, res) => {
 });
 
 
+//===============================
+//delete /api/tareas/4
+//==========================
+//ruta:
+//delete : elimina una tarea segun id.
+app.delete("/api/tareas/:id",(req, res) =>{
+    //converitmos el parametro a numero
+    const id = parseInt(req.params.id);
+    //buscamos la posicion de la tarea
+    //dentro del arreglo
+    const indice = tareas.findIndex(t =>t.id === id);
 
+    //si no existe
+    if(indice === -1){
+        return res.status(404).json({
+        mensaje : "La tarea no existe"
+    });
+}
 
+//eliminamos la tarea del arreglo
+//splice (posicion, cantidad)
+
+tareas.splice(indice, 1);
+
+res.status(200).json({
+    mensaje: "Tarea eliminada correctamente"
+
+});
+});
 
 
 
