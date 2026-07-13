@@ -11,6 +11,14 @@ const PORT = 3000;
 //4. Iniciamos el servidor
 //listen() hace que el servidor quede esperando peticiones
 //de los clientes (por ejemplo, desde un navegador)
+
+
+//middleware
+//
+
+
+
+
 app.listen(PORT, () => {
     //5. Cuando el servidor se incicia correctamente,
     //mostramos un mensaje en la consola.
