@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "nombre": "Ruta del Gótico Clásico Castellano",
+    "duracionDias": 4,
+    "distanciaKm": 380,
+    "catedrales": [
+      {
+        "nombre": "Catedral de Burgos",
+        "hito": "Agujas caladas y el cimborrio gótico plateresco."
+      },
+      {
+        "nombre": "Catedral de León",
+        "hito": "La mayor colección de vidrieras medievales del mundo."
+      },
+      {
+        "nombre": "Catedral de Palencia",
+        "hito": "Cripta visigoda de San Antolín y proporciones puras."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "Ruta del Gótico Primado y del Sur",
+    "duracionDias": 3,
+    "distanciaKm": 500,
+    "catedrales": [
+      {
+        "nombre": "Catedral de Toledo",
+        "hito": "Considerada la ópera magna del gótico en España."
+      },
+      {
+        "nombre": "Catedral de Sevilla",
+        "hito": "La catedral gótica con mayor superficie del mundo."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nombre": "Ruta del Gótico Mediterráneo",
+    "duracionDias": 6,
+    "distanciaKm": 650,
+    "catedrales": [
+      {
+        "nombre": "Catedral de Palma de Mallorca",
+        "hito": "El gran rosetón frente al mar."
+      },
+      {
+        "nombre": "Catedral de Barcelona",
+        "hito": "El claustro medieval con las 13 ocas."
+      },
+      {
+        "nombre": "Catedral de Gerona",
+        "hito": "La nave gótica más ancha del mundo."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nombre": "Gótico Primitivo y de Transición (Finales del S. XII - Principios del XIII)",
+    "duracionDias": 1,
+    "distanciaKm": 0,
+    "catedrales": []
+  }
+]
