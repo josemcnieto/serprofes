@@ -52,21 +52,36 @@ app.get("/api/rutas-goticas", (req, res) => {
     res.json(rutasGoticas);
 });
 
-// [POST] Añadir una nueva ruta al archivo
+// [POST] Añadir una nueva ruta al archivo (¡VERSION CORREGIDA!)
 app.post("/api/rutas-goticas", (req, res) => {
     const rutasGoticas = leerArchivo(); // 1. Traemos el estado actual
     const { nombre, duracionDias, distanciaKm, catedrales } = req.body;
 
-    if (!nombre) {
+    // ❌ CONTROL 1: Validar que el nombre exista y no esté vacío
+    if (!nombre || nombre.trim() === "") {
         return res.status(400).json({ error: "El nombre de la ruta es obligatorio." });
     }
 
-    // 2. Creamos la nueva ruta calculando el ID dinámicamente
+    // ❌ CONTROL 2: Evitar nombres duplicados (ignorando mayúsculas/minúsculas y espacios rebeldes)
+    const existeDuplicado = rutasGoticas.some(
+        ruta => ruta.nombre.trim().toLowerCase() === nombre.trim().toLowerCase()
+    );
+
+    if (existeDuplicado) {
+        return res.status(400).json({ error: "Ya existe una ruta gótica con ese mismo nombre." });
+    }
+
+    // ❌ CONTROL 3: Evitar datos inconsistentes (opcional, pero recomendado para evitar "rutas fantasmas")
+    if (duracionDias === undefined || distanciaKm === undefined) {
+        return res.status(400).json({ error: "Debes proporcionar la duración y la distancia de la ruta." });
+    }
+
+    // 2. Creamos la nueva ruta calculando el ID dinámicamente si pasa los controles
     const nuevaRuta = {
         id: rutasGoticas.length > 0 ? rutasGoticas[rutasGoticas.length - 1].id + 1 : 1,
-        nombre,
-        duracionDias: duracionDias || 1,
-        distanciaKm: distanciaKm || 0,
+        nombre: nombre.trim(),
+        duracionDias: Number(duracionDias),
+        distanciaKm: Number(distanciaKm),
         catedrales: catedrales || []
     };
 

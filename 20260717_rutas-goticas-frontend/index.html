@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutas del Gótico Español</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="arco-ojival" clipPathUnits="objectBoundingBox">
+      <path d="M0,1 C0,0.42 0.28,0 0.5,0 C0.72,0 1,0.42 1,1 Z"></path>
+    </clipPath>
+  </defs>
+</svg>
+
+<div id="banner-estado" class="banner-estado oculto" role="status"></div>
+
+<header class="cabecera">
+  <div class="cabecera__envoltorio">
+    <div class="cabecera__marca">
+      <svg class="icono-cuadrifolio" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="14" cy="20" r="8"/><circle cx="26" cy="20" r="8"/>
+        <circle cx="20" cy="14" r="8"/><circle cx="20" cy="26" r="8"/>
+      </svg>
+      <div>
+        <p class="cabecera__eyebrow">Camino de piedra y luz</p>
+        <h1 class="cabecera__titulo">Rutas del Gótico Español</h1>
+      </div>
+    </div>
+    <button class="boton boton--oro" id="btn-abrir-formulario" type="button">+ Nueva ruta</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__rosetón" id="hero-svg-wrap" aria-hidden="true"></div>
+  <div class="hero__texto">
+    <p class="hero__intro">
+      Tres siglos de agujas, vidrieras y cimborrios unidos por carretera.
+      Cada ruta enlaza catedrales que marcaron el paso del arte gótico por la Península.
+    </p>
+    <dl class="hero__estadisticas">
+      <div class="estadistica">
+        <dt>Rutas</dt>
+        <dd id="stat-rutas">–</dd>
+      </div>
+      <div class="estadistica">
+        <dt>Catedrales</dt>
+        <dd id="stat-catedrales">–</dd>
+      </div>
+      <div class="estadistica">
+        <dt>Km totales</dt>
+        <dd id="stat-km">–</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<main class="lienzo">
+  <div class="listado" id="listado-rutas">
+    <!-- Las tarjetas de ruta se insertan aquí por JS -->
+  </div>
+  <p class="listado__vacio oculto" id="mensaje-vacio">
+    Aún no hay rutas trazadas. Empieza abriendo <button class="enlace" id="btn-primera-ruta" type="button">tu primera ruta</button>.
+  </p>
+</main>
+
+<footer class="pie">
+  <p>Trazado con piedra, oro y grana &middot; datos servidos desde tu API local</p>
+</footer>
+
+<!-- Modal de creación / edición -->
+<div class="modal oculto" id="modal-formulario" aria-hidden="true">
+  <div class="modal__fondo" id="modal-fondo"></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal__cabecera">
+      <h2 id="modal-titulo">Nueva ruta</h2>
+      <button class="modal__cerrar" id="btn-cerrar-modal" type="button" aria-label="Cerrar">&times;</button>
+    </div>
+    <form id="formulario-ruta" class="formulario">
+      <input type="hidden" id="ruta-id">
+      <label class="campo">
+        <span>Nombre de la ruta</span>
+        <input type="text" id="ruta-nombre" required placeholder="Ruta del Gótico...">
+      </label>
+      <div class="campo-fila">
+        <label class="campo">
+          <span>Duración (días)</span>
+          <input type="number" id="ruta-dias" min="1" value="1" required>
+        </label>
+        <label class="campo">
+          <span>Distancia (km)</span>
+          <input type="number" id="ruta-km" min="0" value="0" required>
+        </label>
+      </div>
+
+      <div class="catedrales-editor">
+        <div class="catedrales-editor__cabecera">
+          <span>Catedrales de la ruta</span>
+          <button type="button" class="boton boton--linea boton--pequeno" id="btn-añadir-catedral">+ Añadir catedral</button>
+        </div>
+        <div id="lista-catedrales-form"></div>
+      </div>
+
+      <div class="formulario__acciones">
+        <button type="button" class="boton boton--linea" id="btn-cancelar-formulario">Cancelar</button>
+        <button type="submit" class="boton boton--rojo" id="btn-guardar-ruta">Guardar ruta</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<template id="plantilla-fila-catedral">
+  <div class="fila-catedral">
+    <input type="text" class="input-catedral-nombre" placeholder="Nombre de la catedral">
+    <input type="text" class="input-catedral-hito" placeholder="Hito destacado">
+    <button type="button" class="fila-catedral__quitar" aria-label="Quitar catedral">&times;</button>
+  </div>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -57,9 +57,34 @@
   },
   {
     "id": 4,
-    "nombre": "Gótico Primitivo y de Transición (Finales del S. XII - Principios del XIII)",
+    "nombre": "paella",
+    "duracionDias": 2,
+    "distanciaKm": 100,
+    "catedrales": [
+      {
+        "nombre": "Sevilla",
+        "hito": ""
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nombre": "marisco",
     "duracionDias": 1,
     "distanciaKm": 0,
-    "catedrales": []
+    "catedrales": [
+      {
+        "nombre": "Luarca",
+        "hito": ""
+      },
+      {
+        "nombre": "vigo",
+        "hito": ""
+      },
+      {
+        "nombre": "santander",
+        "hito": ""
+      }
+    ]
   }
 ]
