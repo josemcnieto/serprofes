@@ -1,0 +1,375 @@
+/* =========================================================
+   TOKENS — piedra, oro y grana
+   ========================================================= */
+:root{
+  --rojo:        #C60B1E;
+  --rojo-oscuro: #7E0714;
+  --oro:         #F2B705;
+  --oro-suave:   #F6D26B;
+  --piedra:      #EAE1C8;
+  --piedra-panel:#F6F0DE;
+  --piedra-linea:#D8CBA4;
+  --tinta:       #2A2118;
+  --tinta-suave: #5B4E3C;
+  --azul-vidriera:#1B3A63;
+
+  --fuente-display: "Cinzel", "Georgia", serif;
+  --fuente-cuerpo:   "Crimson Pro", "Iowan Old Style", Georgia, serif;
+  --fuente-datos:    "JetBrains Mono", ui-monospace, monospace;
+
+  --radio-sm: 6px;
+  --sombra: 0 10px 30px -12px rgba(42,33,24,0.35);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, #F4EAD1 0%, transparent 60%),
+    var(--piedra);
+  color:var(--tinta);
+  font-family:var(--fuente-cuerpo);
+  font-size:17px;
+  line-height:1.55;
+}
+
+.oculto{display:none !important;}
+
+/* =========================================================
+   BANNER DE ESTADO (errores de conexión con la API)
+   ========================================================= */
+.banner-estado{
+  position:sticky; top:0; z-index:50;
+  background:var(--tinta);
+  color:var(--oro-suave);
+  font-family:var(--fuente-datos);
+  font-size:0.85rem;
+  text-align:center;
+  padding:0.6rem 1rem;
+  letter-spacing:0.02em;
+}
+
+/* =========================================================
+   CABECERA
+   ========================================================= */
+.cabecera{
+  background:linear-gradient(180deg, var(--tinta) 0%, #352a1e 100%);
+  border-bottom:4px solid var(--oro);
+  position:relative;
+}
+.cabecera::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:-4px; height:4px;
+  background:repeating-linear-gradient(90deg, var(--rojo) 0 24px, transparent 24px 48px);
+}
+.cabecera__envoltorio{
+  max-width:1180px; margin:0 auto;
+  padding:1.6rem 2rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+  flex-wrap:wrap;
+}
+.cabecera__marca{display:flex; align-items:center; gap:1rem;}
+.icono-cuadrifolio{width:34px; height:34px; flex:none;}
+.icono-cuadrifolio circle{fill:none; stroke:var(--oro); stroke-width:1.6;}
+.cabecera__eyebrow{
+  margin:0 0 0.15rem;
+  font-family:var(--fuente-datos);
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--oro-suave);
+}
+.cabecera__titulo{
+  margin:0;
+  font-family:var(--fuente-display);
+  font-weight:600;
+  font-size:1.7rem;
+  color:#FBF3DD;
+  letter-spacing:0.01em;
+}
+
+/* Botones */
+.boton{
+  font-family:var(--fuente-datos);
+  font-size:0.82rem;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  border-radius:var(--radio-sm);
+  padding:0.75rem 1.3rem;
+  border:1.5px solid transparent;
+  cursor:pointer;
+  transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.boton:hover{transform:translateY(-1px);}
+.boton:active{transform:translateY(0);}
+.boton--oro{
+  background:var(--oro);
+  color:var(--tinta);
+  box-shadow:0 6px 16px -6px rgba(242,183,5,0.6);
+}
+.boton--oro:hover{background:var(--oro-suave);}
+.boton--rojo{
+  background:var(--rojo);
+  color:#FBF3DD;
+  box-shadow:0 6px 16px -6px rgba(198,11,30,0.55);
+}
+.boton--rojo:hover{background:var(--rojo-oscuro);}
+.boton--linea{
+  background:transparent;
+  color:var(--tinta);
+  border-color:var(--piedra-linea);
+}
+.boton--linea:hover{border-color:var(--tinta-suave);}
+.boton--pequeno{padding:0.45rem 0.8rem; font-size:0.72rem;}
+.enlace{
+  background:none; border:none; padding:0; cursor:pointer;
+  color:var(--rojo); text-decoration:underline; font:inherit;
+}
+
+/* =========================================================
+   HERO — rosetón
+   ========================================================= */
+.hero{
+  max-width:1180px; margin:0 auto;
+  padding:3.5rem 2rem 2.5rem;
+  display:grid; grid-template-columns:220px 1fr; gap:3rem;
+  align-items:center;
+}
+.hero__rosetón{width:220px; height:220px; flex:none;}
+.hero__intro{
+  font-size:1.22rem;
+  color:var(--tinta-suave);
+  margin:0 0 1.6rem;
+  max-width:52ch;
+}
+.hero__estadisticas{
+  display:flex; gap:2.4rem; margin:0;
+}
+.estadistica dt{
+  font-family:var(--fuente-datos);
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  color:var(--tinta-suave);
+  margin-bottom:0.2rem;
+}
+.estadistica dd{
+  margin:0;
+  font-family:var(--fuente-display);
+  font-size:2rem;
+  color:var(--rojo);
+}
+
+@media (prefers-reduced-motion: no-preference){
+  .rosetón-giro{
+    animation:girar-rosetón 90s linear infinite;
+    transform-origin:center;
+  }
+}
+@keyframes girar-rosetón{ to{ transform:rotate(360deg); } }
+
+/* =========================================================
+   LISTADO DE RUTAS
+   ========================================================= */
+.lienzo{max-width:1180px; margin:0 auto; padding:0 2rem 5rem;}
+.listado{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:2.2rem 2rem;
+}
+.listado__vacio{
+  text-align:center;
+  padding:3rem 1rem;
+  color:var(--tinta-suave);
+  font-size:1.05rem;
+}
+
+.tarjeta{
+  background:var(--piedra-panel);
+  border-radius:var(--radio-sm);
+  box-shadow:var(--sombra);
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  border:1px solid var(--piedra-linea);
+}
+
+.tarjeta__ojiva{
+  height:86px;
+  clip-path:url(#arco-ojival);
+  background:linear-gradient(160deg, var(--rojo) 0%, var(--rojo-oscuro) 100%);
+  display:flex; align-items:flex-end; justify-content:center;
+  padding-bottom:0.6rem;
+  position:relative;
+}
+.tarjeta__numero{
+  font-family:var(--fuente-display);
+  color:var(--oro-suave);
+  font-size:1.05rem;
+}
+
+.tarjeta__cuerpo{
+  padding:1.4rem 1.5rem 1.6rem;
+  flex:1;
+  display:flex; flex-direction:column;
+}
+.tarjeta__titulo{
+  font-family:var(--fuente-display);
+  font-weight:600;
+  font-size:1.28rem;
+  margin:0 0 0.7rem;
+  color:var(--tinta);
+}
+
+.tarjeta__linea-divisoria{
+  height:6px;
+  margin:0 0 1rem;
+  background:
+    linear-gradient(var(--oro), var(--oro)) 0 0/100% 2px no-repeat,
+    linear-gradient(var(--rojo), var(--rojo)) 0 4px/100% 2px no-repeat;
+}
+
+.tarjeta__datos{
+  display:flex; gap:1.6rem; margin-bottom:1.1rem;
+  font-family:var(--fuente-datos);
+}
+.tarjeta__dato{display:flex; flex-direction:column;}
+.tarjeta__dato span:first-child{
+  font-size:0.66rem; text-transform:uppercase; letter-spacing:0.1em;
+  color:var(--tinta-suave);
+}
+.tarjeta__dato span:last-child{font-size:1.05rem; color:var(--azul-vidriera); font-weight:600;}
+
+.tarjeta__catedrales{list-style:none; margin:0 0 1.2rem; padding:0; flex:1;}
+.tarjeta__catedrales li{
+  display:flex; gap:0.6rem; align-items:flex-start;
+  padding:0.5rem 0;
+  border-top:1px dashed var(--piedra-linea);
+}
+.tarjeta__catedrales li:first-child{border-top:none;}
+.mini-cuadrifolio{width:14px; height:14px; flex:none; margin-top:0.35rem;}
+.mini-cuadrifolio circle{fill:var(--oro);}
+.tarjeta__catedral-nombre{
+  display:block; font-weight:600; color:var(--tinta); font-size:0.98rem;
+}
+.tarjeta__catedral-hito{
+  display:block; color:var(--tinta-suave); font-size:0.9rem;
+}
+
+.tarjeta__acciones{
+  display:flex; gap:0.6rem; margin-top:auto;
+  padding-top:0.4rem;
+}
+.tarjeta__acciones .boton{flex:1; padding:0.6rem 0.8rem; font-size:0.72rem;}
+
+/* =========================================================
+   PIE
+   ========================================================= */
+.pie{
+  text-align:center;
+  padding:2rem 1rem 3rem;
+  color:var(--tinta-suave);
+  font-family:var(--fuente-datos);
+  font-size:0.78rem;
+  letter-spacing:0.03em;
+}
+
+/* =========================================================
+   MODAL / FORMULARIO
+   ========================================================= */
+.modal{position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:1.5rem;}
+.modal__fondo{position:absolute; inset:0; background:rgba(24,18,12,0.55); backdrop-filter:blur(2px);}
+.modal__panel{
+  position:relative;
+  background:var(--piedra-panel);
+  border-radius:10px;
+  width:min(560px, 100%);
+  max-height:90vh; overflow-y:auto;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+  border-top:5px solid var(--oro);
+}
+.modal__cabecera{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.4rem 1.6rem 0.6rem;
+}
+.modal__cabecera h2{
+  font-family:var(--fuente-display); font-size:1.35rem; margin:0; color:var(--tinta);
+}
+.modal__cerrar{
+  background:none; border:none; font-size:1.6rem; line-height:1; cursor:pointer;
+  color:var(--tinta-suave); padding:0.2rem 0.5rem;
+}
+.modal__cerrar:hover{color:var(--rojo);}
+
+.formulario{padding:0.6rem 1.6rem 1.6rem; display:flex; flex-direction:column; gap:1.1rem;}
+.campo{display:flex; flex-direction:column; gap:0.4rem; flex:1;}
+.campo span{
+  font-family:var(--fuente-datos); font-size:0.72rem; text-transform:uppercase;
+  letter-spacing:0.08em; color:var(--tinta-suave);
+}
+.campo input{
+  font-family:var(--fuente-cuerpo); font-size:1rem;
+  padding:0.65rem 0.8rem;
+  border:1.5px solid var(--piedra-linea);
+  border-radius:var(--radio-sm);
+  background:#fff;
+  color:var(--tinta);
+}
+.campo input:focus, .fila-catedral input:focus{
+  outline:3px solid var(--oro-suave);
+  outline-offset:1px;
+  border-color:var(--oro);
+}
+.campo-fila{display:flex; gap:1rem;}
+
+.catedrales-editor{
+  border:1px dashed var(--piedra-linea);
+  border-radius:var(--radio-sm);
+  padding:1rem;
+}
+.catedrales-editor__cabecera{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:0.8rem;
+  font-family:var(--fuente-datos); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em;
+  color:var(--tinta-suave);
+}
+.fila-catedral{
+  display:grid; grid-template-columns:1fr 1fr auto; gap:0.6rem;
+  margin-bottom:0.6rem;
+}
+.fila-catedral input{
+  font-family:var(--fuente-cuerpo); font-size:0.92rem;
+  padding:0.55rem 0.7rem;
+  border:1.5px solid var(--piedra-linea);
+  border-radius:var(--radio-sm);
+  background:#fff;
+}
+.fila-catedral__quitar{
+  background:none; border:1.5px solid var(--piedra-linea); border-radius:var(--radio-sm);
+  color:var(--rojo); font-size:1.1rem; cursor:pointer; width:38px;
+}
+.fila-catedral__quitar:hover{background:var(--rojo); color:#fff; border-color:var(--rojo);}
+
+.formulario__acciones{
+  display:flex; justify-content:flex-end; gap:0.7rem;
+  margin-top:0.4rem;
+}
+
+/* Foco visible accesible en toda la app */
+button:focus-visible, .enlace:focus-visible{
+  outline:3px solid var(--oro-suave);
+  outline-offset:2px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr; text-align:center;}
+  .hero__rosetón{margin:0 auto;}
+  .hero__estadisticas{justify-content:center;}
+  .cabecera__envoltorio{padding:1.2rem 1.3rem;}
+  .lienzo{padding:0 1.3rem 4rem;}
+  .campo-fila{flex-direction:column;}
+}
