@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "titulo": "matrix",
+    "director": "lana wachowski",
+    "anio": "1999",
+    "portada": "https://image.tmdb.org/t/p/w500/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg"
+  },
+  {
+    "id": 2,
+    "titulo": "crazy in alabama",
+    "director": "Antonio Banderas",
+    "anio": "1999",
+    "portada": "https://image.tmdb.org/t/p/w500/bAlevqRg9KG9y725tt4YkNajLrk.jpg"
+  },
+  {
+    "id": 3,
+    "titulo": "el camino de los ingleses",
+    "director": "antonio banderas",
+    "anio": "2006",
+    "portada": "https://image.tmdb.org/t/p/w500/buEG63oPmdkc8813Bfp2K91UZrE.jpg"
+  },
+  {
+    "id": 4,
+    "titulo": "El niño",
+    "director": "Daniel Monzon",
+    "anio": "2014",
+    "portada": "https://image.tmdb.org/t/p/w500/cOSAcaVdqQoyX7VDigjAy94mMaO.jpg"
+  },
+  {
+    "id": 5,
+    "titulo": "El manantial",
+    "director": "King Vidor",
+    "anio": "1935",
+    "portada": "https://image.tmdb.org/t/p/w500/aDJnvTnS5Q2SKOTXnW6E8XeHT2t.jpg"
+  },
+  {
+    "id": 6,
+    "titulo": "corriendo en la noche",
+    "director": "pepe romero",
+    "anio": "2000",
+    "portada": "/img/sin-portada.svg"
+  },
+  {
+    "id": 7,
+    "titulo": "sense8",
+    "director": "lana wachowski",
+    "anio": "2015",
+    "portada": "https://image.tmdb.org/t/p/w500/nKZIcIqgu9wMiE7SpfwuFRJXKFs.jpg"
+  },
+  {
+    "id": 8,
+    "titulo": "Titanic",
+    "director": "James Cameron",
+    "anio": "1998",
+    "portada": "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg"
+  },
+  {
+    "id": 9,
+    "titulo": "Lo que el viento se llevo",
+    "director": "Victor Fleming",
+    "anio": "1950",
+    "portada": "https://image.tmdb.org/t/p/w500/g45f8kJ8YKN5r1PWOz5rc1kCNnz.jpg"
+  }
+]
