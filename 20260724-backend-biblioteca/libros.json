@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "titulo": "Don Quijote de la Mancha",
+    "autor": "Miguel de Cervantes"
+  },
+  {
+    "id": 1784923016696,
+    "titulo": "Dan Brown",
+    "autor": "El último secreto",
+    "anio": 2020,
+    "disponible": true
+  },
+  {
+    "id": 1784923082488,
+    "titulo": "Dan Brown",
+    "autor": "El Código Da Vinci",
+    "anio": 2003,
+    "disponible": true
+  }
+]

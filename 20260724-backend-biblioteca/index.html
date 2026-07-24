@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>📚 Gestor de Biblioteca Escolar</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background-color: #f0f4f8;
+    color: #334155;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .app-container { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+  .app-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 24px;
+    border-bottom: 2px solid #cbd5e1; padding-bottom: 16px;
+  }
+  .app-header h1 { font-size: 28px; margin: 0; color: #1e293b; }
+  .status { font-size: 14px; font-weight: 600; padding: 6px 14px; border-radius: 20px; background-color: #e2e8f0; }
+  .status-online { color: #15803d; background-color: #dcfce7; }
+  .status-offline { color: #b91c1c; background-color: #fee2e2; }
+  .status-checking { color: #b45309; background-color: #fef3c7; }
+  .offline-banner {
+    background-color: #fef2f2; border: 1px solid #ef4444; color: #991b1b;
+    padding: 14px 18px; border-radius: 10px; margin-bottom: 24px; font-size: 14px; line-height: 1.5;
+  }
+  .offline-banner code { background-color: #fee2e2; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+  .book-form {
+    background-color: #ffffff; border-radius: 12px; padding: 24px; margin-bottom: 32px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+  }
+  .form-title { margin-top: 0; margin-bottom: 18px; font-size: 18px; color: #0f172a; }
+  .form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 13px; font-weight: 600; color: #64748b; }
+  .form-group input {
+    background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px;
+    padding: 10px 12px; color: #0f172a; font-size: 15px; outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .form-group input:focus { border-color: #3b82f6; background-color: #ffffff; }
+  .form-actions { display: flex; gap: 12px; align-items: center; }
+  .btn {
+    border: none; border-radius: 8px; padding: 10px 18px; font-size: 14px;
+    font-weight: 600; cursor: pointer; transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-primary { background-color: #3b82f6; color: #ffffff; }
+  .btn-warning { background-color: #f59e0b; color: #ffffff; }
+  .btn-secondary { background-color: #94a3b8; color: #ffffff; display: none; } /* Botón cancelar oculto por defecto */
+  
+  .card-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .btn-edit { background-color: #f59e0b; color: #ffffff; padding: 8px 14px; font-size: 13px; flex: 1; }
+  .btn-delete { background-color: #ef4444; color: #ffffff; padding: 8px 14px; font-size: 13px; flex: 1; }
+  
+  .book-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+  .book-card {
+    background-color: #ffffff; border-radius: 12px; padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .book-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+  .book-icon { font-size: 32px; margin-bottom: 12px; }
+  .book-title { margin: 0 0 8px; font-size: 18px; color: #0f172a; }
+  .book-author { margin: 0 0 16px; font-size: 14px; color: #64748b; }
+  .book-year { font-weight: 600; color: #3b82f6; }
+  .empty-message { color: #64748b; text-align: center; padding: 40px 0; grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <header class="app-header">
+    <h1>📚 Biblioteca Escolar</h1>
+    <span id="status" class="status status-checking">🟡 Buscando servidor...</span>
+  </header>
+
+  <div id="offlineBanner" class="offline-banner" style="display:none;">
+    No se detecta el backend en <strong>http://localhost:3000</strong>.<br />
+    Asegúrate de que tu <code>server.js</code> está corriendo y de que has activado <code>cors</code>.
+  </div>
+
+  <form id="bookForm" class="book-form">
+    <h2 id="formTitle" class="form-title">➕ Registrar Nuevo Libro</h2>
+    <div class="form-group">
+      <label for="titulo">Título del Libro</label>
+      <input id="titulo" type="text" placeholder="Ej: Don Quijote de la Mancha" required />
+    </div>
+    <div class="form-group">
+      <label for="autor">Autor</label>
+      <input id="autor" type="text" placeholder="Ej: Miguel de Cervantes" required />
+    </div>
+    <div class="form-group">
+      <label for="anio">Año de Publicación</label>
+      <input id="anio" type="number" placeholder="Ej: 1605" required />
+    </div>
+    <div class="form-actions">
+      <button type="submit" id="submitBtn" class="btn btn-primary">Guardar en Base de Datos</button>
+      <button type="button" id="cancelBtn" class="btn btn-secondary">Cancelar Edición</button>
+    </div>
+  </form>
+
+  <div id="bookList" class="book-list">
+    <!-- Aquí se inyectarán los libros desde el servidor -->
+  </div>
+</div>
+
+<script>
+  // ==========================================================
+  // CONTRATO CON EL BACKEND: Puerto 3000, ruta /api/libros
+  // ==========================================================
+  const API_URL = "http://localhost:3000/api/libros";
+
+  const statusEl = document.getElementById("status");
+  const offlineBanner = document.getElementById("offlineBanner");
+  const bookListEl = document.getElementById("bookList");
+  const formEl = document.getElementById("bookForm");
+  const tituloInput = document.getElementById("titulo");
+  const autorInput = document.getElementById("autor");
+  const anioInput = document.getElementById("anio");
+  
+  // Elementos dinámicos del formulario
+  const formTitle = document.getElementById("formTitle");
+  const submitBtn = document.getElementById("submitBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
+
+  // ESTADO GLOBAL: Controla si estamos creando o editando
+  let libroIdEnEdicion = null;
+
+  // ---------------- Funciones HTTP (Fetch) ----------------
+  async function getLibros() {
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error("Fallo al obtener libros");
+    return res.json();
+  }
+
+  async function createLibro(libro) {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(libro),
+    });
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Fallo en la validación del POST");
+    }
+    return res.json();
+  }
+
+  // NUEVO: Función para hacer el PUT
+  async function updateLibro(id, libro) {
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(libro),
+    });
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Fallo al actualizar el libro");
+    }
+    return res.json();
+  }
+
+  async function deleteLibro(id) {
+    const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error("Fallo al eliminar");
+    return res.json();
+  }
+
+  // ---------------- Lógica de Interfaz (DOM) ----------------
+  function renderLibros(libros) {
+    bookListEl.innerHTML = "";
+    if (libros.length === 0) {
+      bookListEl.innerHTML = '<p class="empty-message">No hay libros registrados. ¡Añade el primero!</p>';
+      return;
+    }
+
+    libros.forEach((libro) => {
+      const card = document.createElement("div");
+      card.className = "book-card";
+      card.innerHTML = `
+        <div>
+          <div class="book-icon">📖</div>
+          <h3 class="book-title">${libro.titulo}</h3>
+          <p class="book-author">✍️ ${libro.autor} <span class="book-year">(${libro.anio})</span></p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-edit">✏️ Editar</button>
+          <button class="btn btn-delete">🗑️ Retirar</button>
+        </div>
+      `;
+      
+      // Asignar eventos a los botones
+      card.querySelector(".btn-delete").addEventListener("click", () => handleDelete(libro.id));
+      card.querySelector(".btn-edit").addEventListener("click", () => handleEditMode(libro));
+      
+      bookListEl.appendChild(card);
+    });
+  }
+
+  function setStatus(state) {
+    if (state === "online") {
+      statusEl.textContent = "🟢 Backend Online";
+      statusEl.className = "status status-online";
+      offlineBanner.style.display = "none";
+    } else if (state === "offline") {
+      statusEl.textContent = "🔴 Backend Caído / Error CORS";
+      statusEl.className = "status status-offline";
+      offlineBanner.style.display = "block";
+    } else {
+      statusEl.textContent = "🟡 Buscando servidor...";
+      statusEl.className = "status status-checking";
+    }
+  }
+
+  // ---------------- Flujo de la Aplicación ----------------
+  async function cargarBiblioteca() {
+    try {
+      const data = await getLibros();
+      renderLibros(data);
+      setStatus("online");
+    } catch (err) {
+      console.error(err);
+      setStatus("offline");
+    }
+  }
+
+  // Prepara el formulario para editar
+  function handleEditMode(libro) {
+    libroIdEnEdicion = libro.id;
+    tituloInput.value = libro.titulo;
+    autorInput.value = libro.autor;
+    anioInput.value = libro.anio;
+
+    formTitle.textContent = "✏️ Editar Libro";
+    submitBtn.textContent = "Actualizar Cambios";
+    submitBtn.className = "btn btn-warning";
+    cancelBtn.style.display = "inline-block";
+    
+    // Sube la pantalla suavemente hacia el formulario
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Resetea el formulario al estado normal (Crear)
+  function resetFormMode() {
+    libroIdEnEdicion = null;
+    formEl.reset();
+    formTitle.textContent = "➕ Registrar Nuevo Libro";
+    submitBtn.textContent = "Guardar en Base de Datos";
+    submitBtn.className = "btn btn-primary";
+    cancelBtn.style.display = "none";
+  }
+
+  // Evento cancelar edición
+  cancelBtn.addEventListener("click", resetFormMode);
+
+  // Envío del formulario (Controla Crear y Actualizar)
+  formEl.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const titulo = tituloInput.value.trim();
+    const autor = autorInput.value.trim();
+    const anio = anioInput.value.trim();
+
+    try {
+      if (libroIdEnEdicion) {
+        // MODO EDICIÓN
+        await updateLibro(libroIdEnEdicion, { titulo, autor, anio: parseInt(anio) });
+      } else {
+        // MODO CREACIÓN
+        await createLibro({ titulo, autor, anio: parseInt(anio) });
+      }
+      
+      resetFormMode(); // Limpiamos y volvemos a la normalidad
+      await cargarBiblioteca(); // Refrescamos la lista
+    } catch (err) {
+      alert("Error en la operación: " + err.message);
+      setStatus("offline");
+    }
+  });
+
+  async function handleDelete(id) {
+    if (!confirm("¿Seguro que quieres eliminar este libro del registro?")) return;
+    try {
+      await deleteLibro(id);
+      await cargarBiblioteca();
+    } catch (err) {
+      alert("Error al eliminar: " + err.message);
+      setStatus("offline");
+    }
+  }
+
+  // Comprobar conexión cada 3 segundos
+  setInterval(cargarBiblioteca, 3000);
+  cargarBiblioteca();
+</script>
+
+</body>
+</html>
