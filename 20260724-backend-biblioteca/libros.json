@@ -17,5 +17,12 @@
     "autor": "El Código Da Vinci",
     "anio": 2003,
     "disponible": true
+  },
+  {
+    "id": 1784929098253,
+    "titulo": "La tabla de Flandes",
+    "autor": "Arturo Pérez-Reverte",
+    "anio": 1990,
+    "disponible": true
   }
 ]
