@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Biblioteca</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 2rem 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .layout {
+                grid-template-columns: 320px 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        input {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: 2px solid var(--primary);
+            border-color: transparent;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        button {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: #94a3b8;
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-hover);
+        }
+
+        .btn-edit {
+            background: #f59e0b;
+            color: white;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.85rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #64748b;
+            padding: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Gestión de Biblioteca</h1>
+
+    <div class="layout">
+        <!-- Formulario de Crear / Editar -->
+        <div class="card">
+            <h2 id="form-title">Añadir Libro</h2>
+            <form id="libro-form">
+                <input type="hidden" id="libro-id">
+                
+                <label>
+                    Título
+                    <input type="text" id="titulo" required placeholder="Ej: Cien años de soledad">
+                </label>
+                
+                <label>
+                    Autor
+                    <input type="text" id="autor" required placeholder="Ej: Gabriel García Márquez">
+                </label>
+                
+                <label>
+                    Año
+                    <input type="number" id="anio" required placeholder="Ej: 1967">
+                </label>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-primary" id="btn-submit">Guardar</button>
+                    <button type="button" class="btn-secondary" id="btn-cancel" style="display: none;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Tabla de Libros -->
+        <div class="card">
+            <h2>Catálogo de Libros</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Año</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-libros">
+                    <!-- Los libros se cargarán aquí dinámicamente -->
+                </tbody>
+            </table>
+            <div id="empty-msg" class="empty-state" style="display: none;">
+                No hay libros registrados aún.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:3000/api/libros";
+
+        // Elementos del DOM
+        const form = document.getElementById("libro-form");
+        const inputId = document.getElementById("libro-id");
+        const inputTitulo = document.getElementById("titulo");
+        const inputAutor = document.getElementById("autor");
+        const inputAnio = document.getElementById("anio");
+        const formTitle = document.getElementById("form-title");
+        const btnSubmit = document.getElementById("btn-submit");
+        const btnCancel = document.getElementById("btn-cancel");
+        const tablaBody = document.getElementById("tabla-libros");
+        const emptyMsg = document.getElementById("empty-msg");
+
+        // Cargar libros al iniciar la página
+        document.addEventListener("DOMContentLoaded", obtenerLibros);
+
+        // 1. OBTENER LIBROS (GET)
+        async function obtenerLibros() {
+            try {
+                const res = await fetch(API_URL);
+                const libros = await res.json();
+                renderizarTabla(libros);
+            } catch (error) {
+                console.error("Error al obtener libros:", error);
+            }
+        }
+
+        // Renderizar filas en la tabla
+        function renderizarTabla(libros) {
+            tablaBody.innerHTML = "";
+
+            if (libros.length === 0) {
+                emptyMsg.style.display = "block";
+                return;
+            }
+
+            emptyMsg.style.display = "none";
+
+            libros.forEach(libro => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${libro.id}</td>
+                    <td><strong>${libro.titulo}</strong></td>
+                    <td>${libro.autor}</td>
+                    <td>${libro.anio}</td>
+                    <td class="actions">
+                        <button class="btn-edit" onclick="prepararEdicion(${libro.id}, '${libro.titulo}', '${libro.autor}', ${libro.anio})">Editar</button>
+                        <button class="btn-danger" onclick="eliminarLibro(${libro.id})">Borrar</button>
+                    </td>
+                `;
+                tablaBody.appendChild(tr);
+            });
+        }
+
+        // 2. CREAR / ACTUALIZAR LIBRO (POST / PUT)
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const id = inputId.value;
+            const libroData = {
+                titulo: inputTitulo.value.trim(),
+                autor: inputAutor.value.trim(),
+                anio: parseInt(inputAnio.value)
+            };
+
+            try {
+                let res;
+                if (id) {
+                    // PUT - Actualizar
+                    res = await fetch(`${API_URL}/${id}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(libroData)
+                    });
+                } else {
+                    // POST - Crear
+                    res = await fetch(API_URL, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(libroData)
+                    });
+                }
+
+                if (res.ok) {
+                    resetearFormulario();
+                    obtenerLibros();
+                } else {
+                    const err = await res.json();
+                    alert(`Error: ${err.error}`);
+                }
+            } catch (error) {
+                console.error("Error al guardar libro:", error);
+            }
+        });
+
+        // 3. ELIMINAR LIBRO (DELETE)
+        async function eliminarLibro(id) {
+            if (!confirm("¿Seguro que deseas eliminar este libro?")) return;
+
+            try {
+                const res = await fetch(`${API_URL}/${id}`, {
+                    method: "DELETE"
+                });
+
+                if (res.ok) {
+                    obtenerLibros();
+                } else {
+                    const err = await res.json();
+                    alert(`Error: ${err.error}`);
+                }
+            } catch (error) {
+                console.error("Error al eliminar libro:", error);
+            }
+        }
+
+        // Preparar el formulario para el modo Edición
+        window.prepararEdicion = function(id, titulo, autor, anio) {
+            inputId.value = id;
+            inputTitulo.value = titulo;
+            inputAutor.value = autor;
+            inputAnio.value = anio;
+
+            formTitle.textContent = "Editar Libro";
+            btnSubmit.textContent = "Actualizar";
+            btnCancel.style.display = "inline-block";
+        };
+
+        // Resetear formulario a modo Crear
+        btnCancel.addEventListener("click", resetearFormulario);
+
+        function resetearFormulario() {
+            form.reset();
+            inputId.value = "";
+            formTitle.textContent = "Añadir Libro";
+            btnSubmit.textContent = "Guardar";
+            btnCancel.style.display = "none";
+        }
+    </script>
+</body>
+</html>

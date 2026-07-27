@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "nombre": "Casa Farnsworth",
+    "arquitecto": "Mies van der Rohe",
+    "ciudad": "Chicago",
+    "anio": 1946
+  },
+  {
+    "id": 2,
+    "nombre": "Edificio Bauhaus",
+    "arquitecto": "Walter Gropius",
+    "ciudad": "Dessau",
+    "anio": 1925
+  },
+  {
+    "id": 3,
+    "nombre": "Villa Savoya",
+    "arquitecto": "Le Corbusier",
+    "ciudad": "Poissy",
+    "anio": 1931
+  },
+  {
+    "id": 4,
+    "nombre": "Apartamentos Lake Shore Drive",
+    "arquitecto": "Mies van der Rohe",
+    "ciudad": "Chicago",
+    "anio": 1949
+  },
+  {
+    "id": 5,
+    "nombre": "Edificiooj Seagram",
+    "arquitecto": "Mies van der Rohe",
+    "ciudad": "Nueva York",
+    "anio": 1958
+  },
+  {
+    "id": 6,
+    "nombre": "Auditorio Kursaal",
+    "arquitecto": "Rafael Moneo",
+    "ciudad": "San Sebastian",
+    "anio": 1990
+  }
+]
