@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "nombre": "ThinkPad X1",
+    "marca": "Lenovo"
+  },
+  {
+    "id": 2,
+    "nombre": "ROG Zephyrus",
+    "marca": "Asus"
+  }
+]
